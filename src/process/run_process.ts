@@ -8,7 +8,6 @@ import { gitPush, resolveGitPushWarn } from "../actions/git_push";
 import chalk from "chalk";
 
 const runProcess = () => {
-  console.log(`\n> Starting process with ${chalk.cyan("gus@1.0.0")}.\n`);
   fs.readdir(`${__dirname}/../../.git`, (err, _) => {
     if (err) {
       if (err.errno === -4058) {

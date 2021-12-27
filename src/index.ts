@@ -57,6 +57,8 @@ const configuration = program.opts();
 
 config.set(configuration);
 
+console.log(`\n> Starting process with ${chalk.cyan("gus@1.0.0")}.\n`);
+
 runProcess();
 
 //// fs.readFile(`${__dirname}/../config.json`, (err, data) => {
