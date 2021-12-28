@@ -23,9 +23,13 @@ const execute = (func: GusProcess, message: string) => {
 
   const output = func(); // Exectuing function and storing output.
 
-  clearInterval(loadingInterval); // Clearing interval to stop loading animation.
+  if (output) {
+    clearInterval(loadingInterval); // Clearing interval to stop loading animation.
 
-  process.stdout.clearLine(0); // Clearing the whole line including loading animation.
+    process.stdout.clearLine(0); // Clearing the whole line including loading animation.
+  } else {
+    //exit
+  }
 
   if (trace) {
     process.stdout.write(buildMessage(output.trace, output.status)); // Writing output trace in the cli.
@@ -46,6 +50,8 @@ const buildMessage = (message: string, status: GusActionStatus) => {
       return chalk.red(`\r⨉ ${message.trim()}`);
     case "warn":
       return chalk.yellow(`\r! ${message.trim()}`);
+    case "handled":
+      return `\r${message.trim()}`;
   }
 };
 

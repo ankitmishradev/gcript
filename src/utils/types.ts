@@ -6,7 +6,7 @@ interface GusProcessOut {
   trace: string;
 }
 
-type GusActionStatus = "done" | "failed" | "warn";
+type GusActionStatus = "done" | "failed" | "warn" | "handled";
 
 interface GusMessage {
   start: string;
