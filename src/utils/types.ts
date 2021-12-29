@@ -1,44 +1,30 @@
-type GusProcess = () => GusProcessOut;
+type GusProcess = () => void;
 
-interface GusProcessOut {
-  status: GusActionStatus;
-  message: string;
-  trace: string;
-}
+type GusExitProcess = (error?: string) => void;
 
-type GusActionStatus = "done" | "failed" | "warn" | "handled";
-
-interface GusMessage {
-  start: string;
-  done: string;
-  failed: string;
-}
-
-type GusExitProcess = ({
-  error,
-  code,
-}: {
-  error?: string;
-  code?: number;
-}) => void;
-
+type GusConfigProps = "message" | "file" | "remote" | "trace";
+type GusConfigValues = string | string[] | boolean;
 interface GusConfig {
   message?: string;
   file?: string[];
   remote?: string;
-  only?: "add" | "commit" | "push";
   trace?: boolean;
 }
 
-type GusConfigAction =
-  | { key: "message"; value: GusConfig["message"] }
-  | { key: "file"; value: GusConfig["file"] }
-  | { key: "remote"; value: GusConfig["remote"] }
-  | { key: "only"; value: GusConfig["only"] }
-  | { key: "trace"; value: GusConfig["trace"] };
+type GusChainProps = "init" | "add" | "commit" | "push" | "version";
+type GusChainValues = "done" | "failed" | "warn" | "dead";
+interface GusChain {
+  init: GusChainValues;
+  add: GusChainValues;
+  commit: GusChainValues;
+  push: GusChainValues;
+  version: GusChainValues;
+}
 
-interface GusConfigInterface {
-  init: () => void;
-  set: (action: GusConfig) => void;
-  get: () => GusConfig;
+type GusOutputStatus = "running" | "failed" | "done" | "warn" | "handled";
+type GusOutputProps = "status" | "message" | "log";
+interface GusOutput {
+  status?: GusOutputStatus;
+  message?: string;
+  log?: string;
 }

@@ -1,26 +1,33 @@
 import shell from "shelljs";
 
-import config from "../utils/config";
-import execute from "../process/execute_process";
+import { setOutput, config, chain } from "../proxy";
+import message from "../utils/messages";
 
-const gitAddFunc: GusProcess = () => {
-  const files = config.get().file?.join(" ");
+const gitAdd: GusProcess = () => {
+  const files = config.file?.join(" ");
+
+  setOutput({
+    status: "running",
+    message: message.add.starting,
+  });
+
   const process = shell.exec(`git add ${files}`, { silent: true });
+
   if (process.code !== 0) {
-    return {
+    chain.add = "failed";
+    setOutput({
       status: "failed",
-      message: "Couldn't add modified and untracked files to the staging area.",
-      trace: process.stderr,
-    };
+      message: message.add.failed,
+      log: process.stderr,
+    });
   } else {
-    return {
+    chain.add = "done";
+    setOutput({
       status: "done",
-      message: "Added all modified and untracked files to the staging area.",
-      trace: "Added all modified and untracked files to the staging area.",
-    };
+      message: message.add.success,
+      log: message.add.success,
+    });
   }
 };
-
-const gitAdd = () => execute(gitAddFunc, "Executing git add .");
 
 export default gitAdd;

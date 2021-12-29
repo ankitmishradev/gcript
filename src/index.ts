@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import { Command, Option } from "commander";
+
 import runVersion from "./commands/version_cmd";
 
 import runProcess from "./process/run_process";
-import config from "./utils/config";
-
-config.init();
+import { setConfig } from "./proxy/config";
 
 const program = new Command();
 
@@ -45,28 +44,9 @@ program.parse(process.argv);
 const configuration = program.opts();
 
 if (configuration.version) {
-  const output = runVersion();
-  if (output === "handled") {
-    process.exit(0);
-  }
+  runVersion();
 } else {
-  config.set(configuration);
+  setConfig(configuration);
   console.log(`\n> Starting process with ${chalk.cyan("gus@1.0.0")}.\n`);
   runProcess();
 }
-
-//// fs.readFile(`${__dirname}/../config.json`, (err, data) => {
-//   if (err) {
-//     const noFileErr = err.message.includes("no such file or directory");
-//     if (noFileErr) {
-//       fs.writeFile(`${__dirname}/../config.json`, "{}", (err) => {
-//         if (err) console.log(err);
-//         else console.log("created file");
-//       });
-//     } else {
-//       console.log(err);
-//     }
-//   } else {
-//     console.log(JSON.parse(data.toString()));
-//   }
-// });

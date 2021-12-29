@@ -1,61 +1,57 @@
 import readline from "readline";
 import shell from "shelljs";
 
-import config from "../utils/config";
-import { commonMessage, pushMessage } from "../utils/messages";
-
-import execute from "../process/execute_process";
+import message from "../utils/messages";
+import { chain, config, setOutput } from "../proxy";
 import exit from "../process/exit_process";
 import { processAfterCommit } from "../process/run_process";
 
-const gitPushFunc: GusProcess = () => {
-  const inputRemote = config.get().remote;
-  const remoteValidation = checkRemote();
-  if (remoteValidation) return remoteValidation;
+const gitPush: GusProcess = async () => {
+  setOutput({ status: "running", message: message.push.starting });
 
-  const process = shell.exec(`git push ${inputRemote} main`, { silent: true });
+  const verification = verifyRemote();
+  if (verification === "failed") {
+    return;
+  }
+
+  const process = shell.exec(`git push ${config.remote} main`, {
+    silent: true,
+  });
   if (process.code !== 0) {
-    return {
+    chain.push = "failed";
+    setOutput({
       status: "failed",
-      message: pushMessage(inputRemote).error,
-      trace:
-        process.stderr.length === 0
-          ? pushMessage(inputRemote).error
-          : process.stderr,
-    };
+      message: message.push.failed,
+      log: process.stderr,
+    });
   } else {
-    return {
+    chain.push = "done";
+    setOutput({
       status: "done",
-      message: pushMessage(inputRemote).success,
-      trace:
-        process.stdout.length === 0
-          ? pushMessage(inputRemote).success
-          : process.stdout,
-    };
+      message: message.push.success,
+      log: process.stdout,
+    });
   }
 };
 
-const checkRemote = (): GusProcessOut | null => {
-  const inputRemote = config.get().remote;
-
-  if (!inputRemote) {
-    // Implement default configuration.
-    return {
+const verifyRemote = () => {
+  if (!config.remote) {
+    chain.push = "warn";
+    setOutput({
       status: "warn",
-      message: pushMessage().noRemoteGiven,
-      trace: pushMessage().noRemoteGiven,
-    };
+      message: message.push.noRemote,
+    });
+    return "warn";
   }
 
-  if (inputRemote && inputRemote.length === 0) {
-    return {
+  if (config.remote?.length === 0) {
+    chain.push = "failed";
+    setOutput({
       status: "failed",
-      message: pushMessage().invalid,
-      trace: pushMessage().invalid,
-    };
+      message: message.push.emptyName,
+    });
+    return "failed";
   }
-
-  return null;
 };
 
 export const resolveGitPushWarn = () => {
@@ -79,33 +75,21 @@ const addGitRemote = () => {
     "> You do not have any remote configured with this repository. Add a remote now:\n? Enter remote url : ",
     (remoteUrl) => {
       if (remoteUrl.length === 0) {
-        exit({
-          error: commonMessage.emptyString,
-          code: 1,
-        }); // Exiting due to empty remote url.
+        exit(message.push.emptyName); // Exiting due to empty remote url.
       } else {
         investigate.question("? Enter remote name : ", (remoteName) => {
           if (remoteName.length === 0) {
-            exit({
-              error: commonMessage.emptyString,
-              code: 1,
-            }); // Exiting due to empty remote name.
+            exit(message.push.emptyName); // Exiting due to empty remote name.
           } else {
             const process = shell.exec(
               `git remote add ${remoteName} ${remoteUrl}`
             );
             if (process.code === 0) {
-              config.set({ ...config.get(), remote: remoteName });
+              config.remote = remoteName;
               investigate.close();
               processAfterCommit(); // Process after resolving git push warning.
             } else {
-              const trace = config.get().trace;
-              exit({
-                error: trace
-                  ? process.stderr
-                  : pushMessage(remoteName).remoteAddFail,
-                code: process.code,
-              }); // Exiting because couldn't add new remote.
+              exit(config.trace ? process.stderr : message.push.remoteAddFail); // Exiting because couldn't add new remote.
             }
           }
         });
@@ -134,9 +118,9 @@ const chooseGitRemote = (remoteList: string[]) => {
     "? Enter remote name from the above list or another remote url : ",
     (remote) => {
       if (remote.length === 0) {
-        exit({ error: pushMessage("").invalid, code: 1 }); // Exiting because empty remote entered.
+        exit(message.push.noUse); // Exiting because empty remote entered.
       } else {
-        config.set({ ...config.get(), remote: remote });
+        config.remote = remote;
         investigate.close();
         processAfterCommit(); // Process after resolving git push warning.
       }
@@ -144,4 +128,4 @@ const chooseGitRemote = (remoteList: string[]) => {
   );
 };
 
-export const gitPush = () => execute(gitPushFunc, "Executing git push ...");
+export default gitPush;

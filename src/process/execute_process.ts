@@ -1,58 +1,52 @@
 import chalk from "chalk";
 
-import config from "../utils/config";
+import { config, output } from "../proxy";
 
-const execute = (func: GusProcess, message: string) => {
-  const trace = config.get().trace;
-  const loadingChar = ["\\", "|", "/", "-"]; // Initialize loading characters
-  let currentCharIndex = 0; // Initialize current index of loading character.
-
+export const startingLine = () => {
   process.stdout.write("\x1B[?25l"); // Disabling cli cursor.
 
-  // Initializeing loading animation with help of setInterval.
-  const loadingInterval = setInterval(() => {
-    process.stdout.write("\r" + loadingChar[currentCharIndex++]);
-    currentCharIndex &= 3;
-  }, 150);
+  process.stdout.write(`\r> ${output.message!}...`); // Writing starting message in the cli.
+};
 
-  // Moving cursor by 2 space to the right from the start of the line to make visible and
-  // to put a space between loading animation and starting message.
-  process.stdout.moveCursor(2, 0);
-
-  process.stdout.write(message.trim()); // Writing starting message in the cli.
-
-  const output = func(); // Exectuing function and storing output.
-
-  if (output) {
-    clearInterval(loadingInterval); // Clearing interval to stop loading animation.
-
+const print = () => {
+  if (output.status === "running") {
+    startingLine();
+  } else {
     process.stdout.clearLine(0); // Clearing the whole line including loading animation.
-  } else {
-    //exit
+
+    process.stdout.write(endingLine()); // Writing output trace in the cli.
+
+    process.stdout.write("\x1b[?25h" + "\n");
   }
-
-  if (trace) {
-    process.stdout.write(buildMessage(output.trace, output.status)); // Writing output trace in the cli.
-  } else {
-    process.stdout.write(buildMessage(output.message, output.status)); // Writing output message in the cli.
-  }
-
-  process.stdout.write("\x1b[?25h" + "\n"); // Enabling cli cursor.
-
-  return output.status;
 };
 
-const buildMessage = (message: string, status: GusActionStatus) => {
-  switch (status) {
+const endingLine = () => {
+  const message = config.trace ? output.log : output.message;
+
+  switch (output.status) {
     case "done":
-      return chalk.green(`\r✓ ${message.trim()}`);
+      return chalk.green(`\r✓ ${message}`);
     case "failed":
-      return chalk.red(`\r⨉ ${message.trim()}`);
+      return chalk.red(`\r⨉ ${message}`);
     case "warn":
-      return chalk.yellow(`\r! ${message.trim()}`);
-    case "handled":
-      return `\r${message.trim()}`;
+      return chalk.yellow(`\r! ${message}`);
+    default:
+      return `\r${message}`;
   }
 };
 
-export default execute;
+export default print;
+
+// const loadingChar = ["\\", "|", "/", "-"]; // Initialize loading characters
+// let currentCharIndex = 0; // Initialize current index of loading character.
+// // Loader function.
+// const loader = () => {
+//   process.stdout.write("\r" + loadingChar[currentCharIndex++]);
+//   currentCharIndex &= 3;
+// };
+
+// setInterval(loader, 100).ref();
+
+// // Moving cursor by 2 space to the right from the start of the line to make visible and
+// // to put a space between loading animation and starting message.
+// process.stdout.moveCursor(1, 0);

@@ -1,24 +1,30 @@
 import shell from "shelljs";
 
-import execute from "../process/execute_process";
+import { setOutput, chain } from "../proxy";
+import message from "../utils/messages";
 
-const gitInitFunc: GusProcess = () => {
+const gitInit: GusProcess = () => {
+  setOutput({
+    message: message.init.starting,
+    status: "running",
+  });
+
   const process = shell.exec("git init", { silent: true });
   if (process.code !== 0) {
-    return {
+    chain.init = "failed";
+    setOutput({
       status: "failed",
-      message: "Couldn't initialize a git repository.",
-      trace: process.stderr,
-    };
+      message: message.init.failed,
+      log: process.stderr,
+    });
   } else {
-    return {
+    chain.init = "done";
+    setOutput({
       status: "done",
-      message: "Initialized a git repository.",
-      trace: process.stdout,
-    };
+      message: message.init.success,
+      log: process.stdout,
+    });
   }
 };
-
-const gitInit = () => execute(gitInitFunc, "Executing git init");
 
 export default gitInit;

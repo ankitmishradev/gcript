@@ -1,14 +1,21 @@
 import shell from "shelljs";
 import semver from "semver";
 import chalk from "chalk";
+
 import execute from "../process/execute_process";
+import { chain, setOutput } from "../proxy";
+import message from "../utils/messages";
 
 const currentVersion = "1.0.0";
 
-const runVersionFunc: GusProcess = () => {
+const runVersion: GusProcess = async () => {
+  setOutput({ status: "running", message: message.version.starting });
+
   const latestVersion = shell.exec("npm view css-class-builder version", {
     silent: true,
   });
+
+  chain.version = "done";
 
   if (latestVersion.code === 0) {
     const newVersAvail = semver.gt(latestVersion.stdout, currentVersion!);
@@ -21,24 +28,21 @@ const runVersionFunc: GusProcess = () => {
           "gus upgrade"
         )} command to upgrade.`
       );
-      return {
+      setOutput({
         status: "handled",
         message: currentVersionMsg(false) + suggestion,
-        trace: currentVersionMsg(false) + suggestion,
-      };
+      });
     } else {
-      return {
+      setOutput({
         status: "handled",
         message: currentVersionMsg(true),
-        trace: currentVersionMsg(true),
-      };
+      });
     }
   } else {
-    return {
+    setOutput({
       status: "handled",
       message: currentVersionMsg(false),
-      trace: currentVersionMsg(false),
-    };
+    });
   }
 };
 
@@ -49,8 +53,5 @@ const currentVersionMsg = (latest: boolean) => {
     return `> v${currentVersion}`;
   }
 };
-
-const runVersion = () =>
-  execute(runVersionFunc, "Hold on a second, getting information.");
 
 export default runVersion;
