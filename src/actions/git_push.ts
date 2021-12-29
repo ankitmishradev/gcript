@@ -10,7 +10,7 @@ const gitPush: GusProcess = async () => {
   setOutput({ status: "running", message: message.push.starting });
 
   const verification = verifyRemote();
-  if (verification === "failed") {
+  if (verification !== "done") {
     return;
   }
 
@@ -52,6 +52,8 @@ const verifyRemote = () => {
     });
     return "failed";
   }
+
+  return "done";
 };
 
 export const resolveGitPushWarn = () => {

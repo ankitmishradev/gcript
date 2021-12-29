@@ -23,14 +23,14 @@ const gitCommit: GusProcess = () => {
   }
 
   const verification = verifyMessage();
-
-  if (verification === "failed") {
+  if (verification !== "done") {
     return;
   }
 
   const process = shell.exec(`git commit -m "${config.message}"`, {
     silent: true,
   });
+
   if (process.code !== 0) {
     chain.commit = "failed";
     setOutput({
@@ -66,6 +66,8 @@ const verifyMessage = () => {
     });
     return "failed";
   }
+
+  return "done";
 };
 
 export const resolveGitCommitWarn = () => {
