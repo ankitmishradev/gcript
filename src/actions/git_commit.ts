@@ -49,7 +49,7 @@ const gitCommit: GusProcess = () => {
 };
 
 const verifyMessage = () => {
-  if (config.message) {
+  if (!config.message) {
     chain.commit = "warn";
     setOutput({
       status: "warn",
