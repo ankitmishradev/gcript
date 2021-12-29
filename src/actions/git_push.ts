@@ -63,7 +63,8 @@ export const resolveGitPushWarn = () => {
   if (remoteListStr.length === 0) {
     addGitRemote();
   } else if (remoteListStr.includes("origin")) {
-    pushWithOrigin();
+    config.remote = "origin";
+    gitPush();
   } else {
     const remoteList = remoteListStr.split("\n");
     chooseGitRemote(remoteList);
@@ -132,9 +133,4 @@ const chooseGitRemote = (remoteList: string[]) => {
       }
     }
   );
-};
-
-const pushWithOrigin = () => {
-  config.remote = "origin";
-  gitCommit();
 };
