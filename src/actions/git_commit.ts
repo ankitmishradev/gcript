@@ -66,6 +66,11 @@ const verifyMessage = () => {
     return "failed";
   }
 
+  if (config.message === ".") {
+    commitViaEditor();
+    return "handled";
+  }
+
   return "done";
 };
 

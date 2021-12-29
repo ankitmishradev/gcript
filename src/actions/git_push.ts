@@ -4,6 +4,7 @@ import shell from "shelljs";
 import message from "../utils/messages";
 import { chain, config, setOutput } from "../proxy";
 import { processAfterCommit, exitProcess } from "../process";
+import { gitCommit } from ".";
 
 export const gitPush: GusProcess = async () => {
   setOutput({ status: "running", message: message.push.starting });
@@ -61,6 +62,8 @@ export const resolveGitPushWarn = () => {
 
   if (remoteListStr.length === 0) {
     addGitRemote();
+  } else if (remoteListStr.includes("origin")) {
+    pushWithOrigin();
   } else {
     const remoteList = remoteListStr.split("\n");
     chooseGitRemote(remoteList);
@@ -129,4 +132,9 @@ const chooseGitRemote = (remoteList: string[]) => {
       }
     }
   );
+};
+
+const pushWithOrigin = () => {
+  config.remote = "origin";
+  gitCommit();
 };
