@@ -1,7 +1,7 @@
 import shell from "shelljs";
 import readline from "readline";
 
-import { processAfterAdd, exitProcess } from "../process";
+import { processAfterAdd, exitProcess, processAfterCommit } from "../process";
 import { chain, config, setOutput } from "../proxy";
 import message from "../utils/messages";
 
@@ -81,16 +81,7 @@ export const resolveGitCommitWarn = () => {
       if (commitMessage.length === 0) {
         exitProcess(message.commit.emptyMessage); // Exiting due to empty message.
       } else if (commitMessage === ".") {
-        setOutput({
-          status: "running",
-          message: "Waiting for your editor to close the file",
-        });
-        const p = shell.exec("git commit", { silent: true });
-        if (p.code === 0) {
-          console.log(p.stdout);
-        } else {
-          console.log(p.stderr);
-        }
+        commitViaEditor();
       } else {
         config.message = commitMessage;
         commitInvestigate.close();
@@ -98,4 +89,31 @@ export const resolveGitCommitWarn = () => {
       }
     }
   );
+};
+
+const commitViaEditor = () => {
+  setOutput({
+    status: "running",
+    message: message.commit.inEditor,
+  });
+
+  const process = shell.exec("git commit", { silent: true });
+
+  if (process.code !== 0) {
+    chain.commit = "failed";
+    setOutput({
+      status: "failed",
+      message: message.commit.emptyMessage,
+      log: process.stderr,
+    });
+    exitProcess("1");
+  } else {
+    chain.commit = "done";
+    setOutput({
+      status: "done",
+      message: message.commit.success,
+      log: process.stdout,
+    });
+    processAfterCommit();
+  }
 };

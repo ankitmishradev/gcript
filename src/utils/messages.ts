@@ -29,7 +29,8 @@ const message = {
     failed: "Couldn't move files from staging area to commit.",
     treeClean: "On branch main, there is nothing to commit.",
     noMessage: "No commit message provided.",
-    emptyMessage: "Can't perform commit with empty message",
+    emptyMessage: "Aborting commit due to empty commit message.",
+    inEditor: "Waiting for your editor to close the file",
   },
   push: {
     emptyName: "An empty string couldn't be used as remote name.",
