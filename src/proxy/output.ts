@@ -42,7 +42,11 @@ const cliOutHandler: ProxyHandler<typeof cliOutObject> = {
 export const output = new Proxy(cliOutObject, cliOutHandler);
 
 export const setOutput = (obj: GusOutput) => {
-  output.log = obj.log ?? obj.message;
+  if (!obj.log || obj.log?.length === 0) {
+    output.log = obj.message;
+  } else {
+    output.log = obj.log;
+  }
   output.message = obj.message;
   output.status = obj.status;
 
