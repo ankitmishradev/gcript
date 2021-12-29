@@ -23,7 +23,7 @@ const message = {
         config.message?.length! > 50
           ? config.message?.slice(0, 50).concat("...")
           : config.message;
-      return `Executing git commit -m "${m}"`;
+      return `Executing git commit -m "${m ?? ""}"`;
     },
     success: "Moved files from staging area and created snapshot of changes.",
     failed: "Couldn't move files from staging area to commit.",

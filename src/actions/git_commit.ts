@@ -75,13 +75,27 @@ export const resolveGitCommitWarn = () => {
     output: process.stdout,
   });
 
-  commitInvestigate.question(`? Enter commit message : `, (commitMessage) => {
-    if (commitMessage.length === 0) {
-      exitProcess(message.commit.emptyMessage); // Exiting due to empty message.
-    } else {
-      config.message = commitMessage;
-      commitInvestigate.close();
-      processAfterAdd(); // Process after resolving git commit.
+  commitInvestigate.question(
+    `? Enter commit message or enter (.) to write in editor: `,
+    (commitMessage) => {
+      if (commitMessage.length === 0) {
+        exitProcess(message.commit.emptyMessage); // Exiting due to empty message.
+      } else if (commitMessage === ".") {
+        setOutput({
+          status: "running",
+          message: "Waiting for your editor to close the file",
+        });
+        const p = shell.exec("git commit", { silent: true });
+        if (p.code === 0) {
+          console.log(p.stdout);
+        } else {
+          console.log(p.stderr);
+        }
+      } else {
+        config.message = commitMessage;
+        commitInvestigate.close();
+        processAfterAdd(); // Process after resolving git commit.
+      }
     }
-  });
+  );
 };
