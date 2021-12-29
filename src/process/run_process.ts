@@ -55,7 +55,7 @@ export const processAfterCommit = () => {
   gitPush();
   switch (chain.push) {
     case "done":
-      exit(); // Exiting because process ends successfully.
+      //exit(); // Exiting because process ends successfully.
       break;
 
     case "warn":
