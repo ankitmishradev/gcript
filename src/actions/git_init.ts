@@ -3,7 +3,7 @@ import shell from "shelljs";
 import { setOutput, chain } from "../proxy";
 import message from "../utils/messages";
 
-const gitInit: GusProcess = () => {
+export const gitInit: GusProcess = () => {
   setOutput({
     message: message.init.starting,
     status: "running",
@@ -26,5 +26,3 @@ const gitInit: GusProcess = () => {
     });
   }
 };
-
-export default gitInit;

@@ -2,13 +2,7 @@ import chalk from "chalk";
 
 import { config, output } from "../proxy";
 
-export const startingLine = () => {
-  process.stdout.write("\x1B[?25l"); // Disabling cli cursor.
-
-  process.stdout.write(`\r> ${output.message!} ...`); // Writing starting message in the cli.
-};
-
-const print = () => {
+export const printProcess = () => {
   if (output.status === "running") {
     startingLine();
   } else {
@@ -18,6 +12,12 @@ const print = () => {
 
     process.stdout.write("\x1b[?25h" + "\n");
   }
+};
+
+const startingLine = () => {
+  process.stdout.write("\x1B[?25l"); // Disabling cli cursor.
+
+  process.stdout.write(`\r> ${output.message!}...`); // Writing starting message in the cli.
 };
 
 const endingLine = () => {
@@ -34,8 +34,6 @@ const endingLine = () => {
       return `\r${message}`;
   }
 };
-
-export default print;
 
 // const loadingChar = ["\\", "|", "/", "-"]; // Initialize loading characters
 // let currentCharIndex = 0; // Initialize current index of loading character.

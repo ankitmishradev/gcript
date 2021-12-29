@@ -1,4 +1,4 @@
-import print, { startingLine } from "../process/print_process";
+import { printProcess } from "../process";
 
 const cliOutStatus = ["running", "failed", "done", "warn", "handled"];
 
@@ -50,5 +50,5 @@ export const setOutput = (obj: GusOutput) => {
   output.message = obj.message;
   output.status = obj.status;
 
-  print();
+  printProcess();
 };

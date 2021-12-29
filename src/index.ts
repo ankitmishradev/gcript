@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 import chalk from "chalk";
-import { Command, Option } from "commander";
+import { Command } from "commander";
 
 import runVersion from "./commands/version_cmd";
-
-import runProcess from "./process/run_process";
+import { runProcess } from "./process";
 import { setConfig } from "./proxy/config";
 
 const program = new Command();

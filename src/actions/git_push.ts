@@ -3,10 +3,9 @@ import shell from "shelljs";
 
 import message from "../utils/messages";
 import { chain, config, setOutput } from "../proxy";
-import exit from "../process/exit_process";
-import { processAfterCommit } from "../process/run_process";
+import { processAfterCommit, exitProcess } from "../process";
 
-const gitPush: GusProcess = async () => {
+export const gitPush: GusProcess = async () => {
   setOutput({ status: "running", message: message.push.starting });
 
   const verification = verifyRemote();
@@ -77,11 +76,11 @@ const addGitRemote = () => {
     "> You do not have any remote configured with this repository. Add a remote now:\n? Enter remote url : ",
     (remoteUrl) => {
       if (remoteUrl.length === 0) {
-        exit(message.push.emptyName); // Exiting due to empty remote url.
+        exitProcess(message.push.emptyName); // Exiting due to empty remote url.
       } else {
         investigate.question("? Enter remote name : ", (remoteName) => {
           if (remoteName.length === 0) {
-            exit(message.push.emptyName); // Exiting due to empty remote name.
+            exitProcess(message.push.emptyName); // Exiting due to empty remote name.
           } else {
             const process = shell.exec(
               `git remote add ${remoteName} ${remoteUrl}`
@@ -91,7 +90,9 @@ const addGitRemote = () => {
               investigate.close();
               processAfterCommit(); // Process after resolving git push warning.
             } else {
-              exit(config.trace ? process.stderr : message.push.remoteAddFail); // Exiting because couldn't add new remote.
+              exitProcess(
+                config.trace ? process.stderr : message.push.remoteAddFail
+              ); // Exiting because couldn't add new remote.
             }
           }
         });
@@ -120,7 +121,7 @@ const chooseGitRemote = (remoteList: string[]) => {
     "? Enter remote name from the above list or another remote url : ",
     (remote) => {
       if (remote.length === 0) {
-        exit(message.push.noUse); // Exiting because empty remote entered.
+        exitProcess(message.push.noUse); // Exiting because empty remote entered.
       } else {
         config.remote = remote;
         investigate.close();
@@ -129,5 +130,3 @@ const chooseGitRemote = (remoteList: string[]) => {
     }
   );
 };
-
-export default gitPush;

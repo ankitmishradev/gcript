@@ -3,7 +3,7 @@ import shell from "shelljs";
 import { setOutput, config, chain } from "../proxy";
 import message from "../utils/messages";
 
-const gitAdd: GusProcess = () => {
+export const gitAdd: GusProcess = () => {
   const files = config.file?.join(" ");
 
   setOutput({
@@ -29,5 +29,3 @@ const gitAdd: GusProcess = () => {
     });
   }
 };
-
-export default gitAdd;

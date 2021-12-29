@@ -2,7 +2,6 @@ import shell from "shelljs";
 import semver from "semver";
 import chalk from "chalk";
 
-import execute from "../process/print_process";
 import { chain, setOutput } from "../proxy";
 import message from "../utils/messages";
 

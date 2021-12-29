@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-const exit: GusExitProcess = (error) => {
+export const exitProcess: GusExitProcess = (error) => {
   if (error === "1") {
     console.log(`\n> Exiting process with code 1.`);
     process.exit(1);
@@ -13,5 +13,3 @@ const exit: GusExitProcess = (error) => {
     process.exit(0);
   }
 };
-
-export default exit;

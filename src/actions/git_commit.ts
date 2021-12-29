@@ -1,12 +1,11 @@
 import shell from "shelljs";
 import readline from "readline";
 
-import exit from "../process/exit_process";
-import { processAfterAdd } from "../process/run_process";
+import { processAfterAdd, exitProcess } from "../process";
 import { chain, config, setOutput } from "../proxy";
 import message from "../utils/messages";
 
-const gitCommit: GusProcess = () => {
+export const gitCommit: GusProcess = () => {
   setOutput({ status: "running", message: message.commit.starting });
 
   const treeClean = shell
@@ -78,7 +77,7 @@ export const resolveGitCommitWarn = () => {
 
   commitInvestigate.question(`? Enter commit message : `, (commitMessage) => {
     if (commitMessage.length === 0) {
-      exit(message.commit.emptyMessage); // Exiting due to empty message.
+      exitProcess(message.commit.emptyMessage); // Exiting due to empty message.
     } else {
       config.message = commitMessage;
       commitInvestigate.close();
@@ -86,5 +85,3 @@ export const resolveGitCommitWarn = () => {
     }
   });
 };
-
-export default gitCommit;

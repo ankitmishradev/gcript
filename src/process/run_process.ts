@@ -1,19 +1,23 @@
 import fs from "fs";
 
-import exit from "./exit_process";
-import gitAdd from "../actions/git_add";
-import gitInit from "../actions/git_init";
-import gitCommit, { resolveGitCommitWarn } from "../actions/git_commit";
-import gitPush, { resolveGitPushWarn } from "../actions/git_push";
+import {
+  gitInit,
+  gitAdd,
+  gitCommit,
+  gitPush,
+  resolveGitCommitWarn,
+  resolveGitPushWarn,
+} from "../actions";
 import { chain } from "../proxy";
+import { exitProcess } from "./exit_process";
 
-const runProcess = () => {
+export const runProcess = () => {
   fs.readdir(`${__dirname}/../../.git`, (err, _) => {
     if (err) {
       if (err.errno === -4058) {
         gitInit();
         if (chain.init === "failed") {
-          exit("1"); // Exiting process because git init failed.
+          exitProcess("1"); // Exiting process because git init failed.
         }
       }
     }
@@ -29,7 +33,7 @@ const processAfterInit = () => {
       break;
 
     case "failed":
-      exit("1"); // Exiting because git add failed.
+      exitProcess("1"); // Exiting because git add failed.
       break;
   }
 };
@@ -46,7 +50,7 @@ export const processAfterAdd = () => {
       break;
 
     case "failed":
-      exit("1"); // Exiting because git commit failed.
+      exitProcess("1"); // Exiting because git commit failed.
       break;
   }
 };
@@ -55,7 +59,7 @@ export const processAfterCommit = () => {
   gitPush();
   switch (chain.push) {
     case "done":
-      //exit(); // Exiting because process ends successfully.
+      exitProcess(); // Exiting because process ends successfully.
       break;
 
     case "warn":
@@ -63,9 +67,7 @@ export const processAfterCommit = () => {
       break;
 
     case "failed":
-      exit("1"); // Exiting because git push failed.
+      exitProcess("1"); // Exiting because git push failed.
       break;
   }
 };
-
-export default runProcess;
