@@ -5,7 +5,7 @@ import { config, output } from "../proxy";
 export const startingLine = () => {
   process.stdout.write("\x1B[?25l"); // Disabling cli cursor.
 
-  process.stdout.write(`\r> ${output.message!}...`); // Writing starting message in the cli.
+  process.stdout.write(`\r> ${output.message!} ...`); // Writing starting message in the cli.
 };
 
 const print = () => {
