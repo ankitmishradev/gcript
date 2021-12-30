@@ -2,17 +2,18 @@
 import chalk from "chalk";
 import { Command } from "commander";
 
-import { runProcess } from "./process";
-import { setConfig } from "./proxy";
 import { runCmd, upgradeCmd, versionCmd } from "./commands";
 
 const program = new Command();
 
-program.name("gus").usage("<command> | <command> [options] | [options]");
+program
+  .name("gus")
+  .usage("<command> | <command> [options] | [options]")
+  .description("A cli tool to ease the process of common git operations.");
 
-program.addHelpCommand("help [command]", "Display help for [command]");
+program.addHelpCommand("help [command]", "Display help for [command].");
 
-program.helpOption("-h, --help", "Displat help for command");
+program.helpOption("-h, --help", "Display help for command");
 
 program.addHelpText(
   "afterAll",

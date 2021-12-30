@@ -9,11 +9,11 @@ export const runCmd = (program: Command) => {
     .description("Run combined git [add, commit, push] operation.")
     .option(
       "-m, --message <message>",
-      "Move files from the staging area with commit <message>"
+      "Move files from the staging area to commit with <message>"
     )
     .option(
       "-f, --file <files...>",
-      "Add change from the <files...> to the staging area"
+      "Add changes from the <files...> to the staging area"
     )
     .option(
       "-r, --remote <remote>",
@@ -21,7 +21,7 @@ export const runCmd = (program: Command) => {
     )
     .option(
       "-b, --branch <branch>",
-      "Use <branch> to push local commits to remote repository"
+      "Push local commits to the remote repository's <branch>"
     )
     .option(
       "-t, --trace",
