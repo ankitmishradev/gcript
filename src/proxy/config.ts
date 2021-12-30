@@ -32,7 +32,7 @@ const configHandler: ProxyHandler<typeof configObject> = {
 export const config = new Proxy(configObject, configHandler);
 
 export const setConfig = (obj: GusConfig) => {
-  if (obj.branch || obj.branch?.length === 0) {
+  if (!obj.branch || obj.branch.length === 0) {
     config.branch = "main";
   } else {
     config.branch = obj.branch;

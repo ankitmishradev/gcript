@@ -35,7 +35,13 @@ const message = {
   push: {
     emptyName: "An empty string couldn't be used as remote name.",
     noRemote: "No remote is specified.",
-
+    findNoRemote:
+      "> This repository does not have any remotes. Add a remote now:",
+    findOriginRemote: "Found origin remote in the repository.",
+    detectRemotes: "Searching the repository for remote.",
+    haveRemotes: "> You have the following remotes:",
+    failDetectRemotes:
+      "Couldn't search the repository remotes. Please fix this issue manually.",
     get starting(): string {
       return `Executing git push ${config.remote} ${config.branch}`;
     },

@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { Command } from "commander";
 import { runProcess } from "../process";
-import { setConfig } from "../proxy";
+import { config, setConfig } from "../proxy";
 
 export const runCmd = (program: Command) => {
   program
@@ -11,7 +11,10 @@ export const runCmd = (program: Command) => {
       "-m, --message <message>",
       "Move files from the staging area with commit <message>"
     )
-    .option("-f, --file <files...>", "Move <files...> to the staging area")
+    .option(
+      "-f, --file <files...>",
+      "Add change from the <files...> to the staging area"
+    )
     .option(
       "-r, --remote <remote>",
       "Push local commits to the <remote> repository"
