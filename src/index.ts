@@ -2,12 +2,17 @@
 import chalk from "chalk";
 import { Command } from "commander";
 
-import runVersion from "./commands/version_cmd";
 import { runProcess } from "./process";
 import { setConfig } from "./proxy";
-import { upgradeCmd, runCmd } from "./commands";
+import { runCmd, upgradeCmd, versionCmd } from "./commands";
 
 const program = new Command();
+
+program.name("gus").usage("<command> | <command> [options] | [options]");
+
+program.addHelpCommand("help [command]", "Display help for [command]");
+
+program.helpOption("-h, --help", "Displat help for command");
 
 program.addHelpText(
   "afterAll",
@@ -17,7 +22,8 @@ Visit ${chalk.cyan(
   )} to see the full documentation.`
 );
 
-upgradeCmd(program);
 runCmd(program);
+versionCmd(program);
+upgradeCmd(program);
 
 program.parse(process.argv);

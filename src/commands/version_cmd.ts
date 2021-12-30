@@ -4,14 +4,24 @@ import chalk from "chalk";
 
 import { chain, setOutput } from "../proxy";
 import message from "../utils/messages";
+import { Command, program } from "commander";
 
 const currentVersion = "1.0.0";
 
-const runVersion: GusProcess = async () => {
+export const versionCmd = (program: Command) => {
+  program
+    .command("version")
+    .description("Display current version of gus.")
+    .action(runAction)
+    .option("-l, --latest", "Display latest version of gus available on npm");
+};
+
+const runAction: GusProcess = async () => {
   setOutput({ status: "running", message: message.version.starting });
 
   const latestVersion = shell.exec("npm view css-class-builder version", {
     silent: true,
+    timeout: 5000,
   });
 
   chain.version = "done";
@@ -25,7 +35,7 @@ const runVersion: GusProcess = async () => {
           "v" + latestVersion.stdout.trim()
         )} of gus is available. Please run ${chalk.cyan(
           "gus upgrade"
-        )} command to upgrade.`
+        )} command to upgrade gus.`
       );
       setOutput({
         status: "handled",
@@ -52,5 +62,3 @@ const currentVersionMsg = (latest: boolean) => {
     return `> v${currentVersion}`;
   }
 };
-
-export default runVersion;

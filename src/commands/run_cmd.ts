@@ -7,24 +7,24 @@ export const runCmd = (program: Command) => {
   program
     .command("run")
     .description("Run combined git [add, commit, push] operation.")
-    .action(runAction)
     .option(
       "-m, --message <message>",
-      "move tracked files to the staging area with commit <message>"
+      "Move files from the staging area with commit <message>"
     )
-    .option(
-      "-f, --file <files...>",
-      "specify files to move to the staging area"
-    )
+    .option("-f, --file <files...>", "Move <files...> to the staging area")
     .option(
       "-r, --remote <remote>",
-      "push local commits to the <remote> repository"
+      "Push local commits to the <remote> repository"
     )
     .option(
       "-b, --branch <branch>",
-      "push commits to the remote repository's <branch> branch"
+      "Use <branch> to push local commits to remote repository"
     )
-    .option("-t, --trace", "trace the complete log of error");
+    .option(
+      "-t, --trace",
+      "If available, display the complete log of operation"
+    )
+    .action(runAction);
 };
 
 export const runAction = (options: GusConfig) => {
