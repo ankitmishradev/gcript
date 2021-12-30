@@ -37,7 +37,7 @@ const message = {
     noRemote: "No remote is specified.",
 
     get starting(): string {
-      return `Executing git push ${config.remote} main`;
+      return `Executing git push ${config.remote} ${config.branch}`;
     },
 
     get noUse() {

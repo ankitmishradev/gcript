@@ -14,7 +14,7 @@ export const gitPush: GusProcess = async () => {
     return;
   }
 
-  const process = shell.exec(`git push ${config.remote} main`, {
+  const process = shell.exec(`git push ${config.remote} ${config.branch}`, {
     silent: true,
   });
   if (process.code !== 0) {

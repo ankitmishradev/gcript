@@ -1,3 +1,3 @@
 export { chain } from "./chain";
-export { config } from "./config";
+export { config, setConfig } from "./config";
 export { output, setOutput } from "./output";

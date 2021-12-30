@@ -12,6 +12,9 @@ const configHandler: ProxyHandler<typeof configObject> = {
       case "remote":
         target.remote = value as string;
         break;
+      case "branch":
+        target.branch = value as string;
+        break;
       case "trace":
         target.trace = value as boolean;
         break;
@@ -29,6 +32,11 @@ const configHandler: ProxyHandler<typeof configObject> = {
 export const config = new Proxy(configObject, configHandler);
 
 export const setConfig = (obj: GusConfig) => {
+  if (obj.branch || obj.branch?.length === 0) {
+    config.branch = "main";
+  } else {
+    config.branch = obj.branch;
+  }
   config.file = obj.file ?? ["."];
   config.message = obj.message;
   config.remote = obj.remote;

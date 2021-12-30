@@ -2,13 +2,14 @@ type GusProcess = () => void;
 
 type GusExitProcess = (error?: string) => void;
 
-type GusConfigProps = "message" | "file" | "remote" | "trace";
+type GusConfigProps = "message" | "file" | "remote" | "trace" | "branch";
 type GusConfigValues = string | string[] | boolean;
 interface GusConfig {
   message?: string;
   file?: string[];
   remote?: string;
   trace?: boolean;
+  branch?: string;
 }
 
 type GusChainProps = "init" | "add" | "commit" | "push" | "version";
