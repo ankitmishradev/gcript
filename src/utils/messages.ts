@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import { config } from "../proxy";
-//k
+
 const buildAddMessage = (head: string) => {
-  return `${head} git add ${config.run.file}`;
+  return `${head} git add ${config.run.file.join(" ")}`;
 };
 
 const buildCommitMessage = (head: string) => {
@@ -22,9 +22,9 @@ const message = {
   common: {
     emptyString:
       "Your response seems to be an empty string which is not valid.",
-    starting: `\n> Starting process with ${chalk.cyan(
+    starting: `> Starting process with ${chalk.cyan(
       `gus@${config.global.version}`
-    )}`,
+    )}\n`,
   },
   init: {
     failed: "Failed executing git init.",
@@ -33,14 +33,26 @@ const message = {
   },
   add: {
     nothingToAdd: "On branch main, all files and changes are already staged.",
-    starting: buildAddMessage("Executing"),
-    failed: buildAddMessage("Faile executing"),
-    success: buildAddMessage("Successfully executed"),
+    get starting(): string {
+      return buildAddMessage("Executing");
+    },
+    get failed(): string {
+      return buildAddMessage("Failed executing");
+    },
+    get success(): string {
+      return buildAddMessage("Successfully executed");
+    },
   },
   commit: {
-    starting: buildCommitMessage("Executing"),
-    success: buildCommitMessage("Successfully executed"),
-    failed: buildCommitMessage("Failed executing"),
+    get starting() {
+      return buildCommitMessage("Executing");
+    },
+    get success() {
+      return buildCommitMessage("Successfully executed");
+    },
+    get failed() {
+      return buildCommitMessage("Failed executing");
+    },
     treeClean: "On branch main, there is nothing to commit.",
     noMessage: "No commit message provided.",
     emptyMessage: "Aborting commit due to empty commit message.",
@@ -56,9 +68,15 @@ const message = {
     haveRemotes: "> You have the following remotes:",
     failDetectRemotes:
       "Couldn't search the repository remotes. Please fix this issue manually.",
-    starting: buildPushMessage("Executing"),
-    failed: buildPushMessage("Failed executing"),
-    success: buildPushMessage("Successfully executed"),
+    get starting() {
+      return buildPushMessage("Executing");
+    },
+    get failed() {
+      return buildPushMessage("Failed executing");
+    },
+    get success() {
+      return buildPushMessage("Successfully executed");
+    },
     get noUse() {
       return `Either you do not have access to use '${config.run.remote}' remote repository or it does not exist.`;
     },
