@@ -1,26 +1,35 @@
-const configObject: GusConfig = {};
+const configObject: GusConfig = {
+  global: {
+    trace: false,
+    version: "1.0.0",
+  },
+  run: {
+    file: ["."],
+    branch: "main",
+    message: undefined,
+    remote: undefined,
+  },
+  version: {
+    latest: false,
+  },
+  upgrade: {
+    local: true,
+    global: false,
+  },
+};
 
 const configHandler: ProxyHandler<typeof configObject> = {
   set: (target, prop: GusConfigProps, value: GusConfigValues) => {
-    switch (prop) {
-      case "file":
-        target.file = value as string[];
-        break;
-      case "message":
-        target.message = value as string;
-        break;
-      case "remote":
-        target.remote = value as string;
-        break;
-      case "branch":
-        target.branch = value as string;
-        break;
-      case "trace":
-        target.trace = value as boolean;
-        break;
-      default:
-        throw new Error("Can not set value of undefined property");
+    if (prop === "run") {
+      target.run = resolveRunConfig(value as GusRunConfig);
+      return true;
     }
+
+    if (prop === "global") {
+      target.global = resolveGlobalConfig(value as GusGlobalConfig);
+    }
+
+    Reflect.set(target, prop, value);
 
     return true;
   },
@@ -31,14 +40,25 @@ const configHandler: ProxyHandler<typeof configObject> = {
 
 export const config = new Proxy(configObject, configHandler);
 
-export const setConfig = (obj: GusConfig) => {
-  if (!obj.branch || obj.branch.length === 0) {
-    config.branch = "main";
-  } else {
-    config.branch = obj.branch;
+const resolveRunConfig = (value: GusRunConfig) => {
+  if (!value.branch || value.branch.length === 0) {
+    value.branch = config.run.branch;
   }
-  config.file = obj.file ?? ["."];
-  config.message = obj.message;
-  config.remote = obj.remote;
-  config.trace = obj.trace;
+  if (!value.file) {
+    value.file = config.run.file;
+  }
+
+  return value;
+};
+
+const resolveGlobalConfig = (value: GusGlobalConfig) => {
+  if (!value.version) {
+    value.version = config.global.version;
+  }
+
+  if (value.trace === undefined) {
+    value.trace = false;
+  }
+
+  return value;
 };

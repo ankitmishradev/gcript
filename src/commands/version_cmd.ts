@@ -4,7 +4,7 @@ import chalk from "chalk";
 
 import { chain, setOutput } from "../proxy";
 import message from "../utils/messages";
-import { Command, program } from "commander";
+import { Command } from "commander";
 
 const currentVersion = "1.0.0";
 
@@ -17,6 +17,8 @@ export const versionCmd = (program: Command) => {
 };
 
 const runAction: GusProcess = async () => {
+  console.log(message.common.starting);
+
   setOutput({ status: "running", message: message.version.starting });
 
   const latestVersion = shell.exec("npm view css-class-builder version", {

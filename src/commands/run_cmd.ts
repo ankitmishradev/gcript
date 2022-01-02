@@ -1,7 +1,8 @@
 import chalk from "chalk";
 import { Command } from "commander";
 import { runProcess } from "../process";
-import { config, setConfig } from "../proxy";
+import { config } from "../proxy";
+import message from "../utils/messages";
 
 export const runCmd = (program: Command) => {
   program
@@ -23,15 +24,12 @@ export const runCmd = (program: Command) => {
       "-b, --branch <branch>",
       "Push local commits to the remote repository's <branch>"
     )
-    .option(
-      "-t, --trace",
-      "If available, display the complete log of operation"
-    )
+
     .action(runAction);
 };
 
-export const runAction = (options: GusConfig) => {
-  setConfig(options);
-  console.log(`\n> Starting process with ${chalk.cyan("gus@1.0.0")}.\n`);
+export const runAction = (options: GusRunConfig) => {
+  config.run = options;
+  console.log(message.common.starting);
   runProcess();
 };

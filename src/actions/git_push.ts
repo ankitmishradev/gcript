@@ -15,9 +15,13 @@ export const gitPush: GusProcess = async () => {
     return;
   }
 
-  const process = shell.exec(`git push ${config.remote} ${config.branch}`, {
-    silent: true,
-  });
+  const process = shell.exec(
+    `git push ${config.run.remote} ${config.run.branch}`,
+    {
+      silent: true,
+    }
+  );
+
   if (process.code !== 0) {
     chain.push = "failed";
     setOutput({
@@ -36,7 +40,7 @@ export const gitPush: GusProcess = async () => {
 };
 
 const verifyRemote = () => {
-  if (!config.remote) {
+  if (!config.run.remote) {
     chain.push = "warn";
     setOutput({
       status: "warn",
@@ -45,7 +49,7 @@ const verifyRemote = () => {
     return "warn";
   }
 
-  if (config.remote?.length === 0) {
+  if (config.run.remote?.length === 0) {
     chain.push = "failed";
     setOutput({
       status: "failed",
@@ -71,7 +75,7 @@ export const resolveGitPushWarn = () => {
       addGitRemote();
     } else if (remoteListStr.includes("origin")) {
       setOutput({ status: "done", message: message.push.findOriginRemote });
-      config.remote = "origin";
+      config.run.remote = "origin";
       gitPush();
     } else {
       setOutput({ status: "handled", message: message.push.haveRemotes });
@@ -98,12 +102,12 @@ const addGitRemote = () => {
             `git remote add ${remoteName} ${remoteUrl}`
           );
           if (process.code === 0) {
-            config.remote = remoteName;
+            config.run.remote = remoteName;
             investigate.close();
             processAfterCommit(); // Process after resolving git push warning.
           } else {
             exitProcess(
-              config.trace ? process.stderr : message.push.remoteAddFail
+              config.global.trace ? process.stderr : message.push.remoteAddFail
             ); // Exiting because couldn't add new remote.
           }
         }
@@ -132,7 +136,7 @@ const chooseGitRemote = (remoteList: string[]) => {
       if (remote.length === 0) {
         exitProcess(message.push.noUse); // Exiting because empty remote entered.
       } else {
-        config.remote = remote;
+        config.run.remote = remote;
         investigate.close();
         processAfterCommit(); // Process after resolving git push warning.
       }

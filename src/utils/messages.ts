@@ -1,32 +1,46 @@
+import chalk from "chalk";
 import { config } from "../proxy";
+
+const buildAddMessage = (head: string) => {
+  return `${head} git add ${config.run.file}`;
+};
+
+const buildCommitMessage = (head: string) => {
+  const m =
+    config.run.message?.length! > 50
+      ? config.run.message?.slice(0, 50).concat("...")
+      : config.run.message;
+
+  return `${head} git commit -m "${m ?? ""}"`;
+};
+
+const buildPushMessage = (head: string) => {
+  return `${head} git push ${config.run.remote} ${config.run.branch}`;
+};
 
 const message = {
   common: {
     emptyString:
       "Your response seems to be an empty string which is not valid.",
+    starting: `\n> Starting process with ${chalk.cyan(
+      `gus@${config.global.version}`
+    )}`,
   },
   init: {
-    failed: "Couldn't initialize a git repository.",
+    failed: "Failed executing git init.",
     starting: "Executing git init",
-    success: "Initialized a git repository.",
+    success: "Successfully executed git init.",
   },
   add: {
-    get starting() {
-      return `Executing git add ${config.file}`;
-    },
-    failed: "Couldn't add modified and untracked files to the staging area.",
-    success: "Added all modified and untracked files to the staging area.",
+    nothingToAdd: "On branch main, all files and changes are already staged.",
+    starting: buildAddMessage("Executing"),
+    failed: buildAddMessage("Faile executing"),
+    success: buildAddMessage("Successfully executed"),
   },
   commit: {
-    get starting() {
-      const m =
-        config.message?.length! > 50
-          ? config.message?.slice(0, 50).concat("...")
-          : config.message;
-      return `Executing git commit -m "${m ?? ""}"`;
-    },
-    success: "Moved files from staging area and created snapshot of changes.",
-    failed: "Couldn't move files from staging area to commit.",
+    starting: buildCommitMessage("Executing"),
+    success: buildCommitMessage("Successfully executed"),
+    failed: buildCommitMessage("Failed executing"),
     treeClean: "On branch main, there is nothing to commit.",
     noMessage: "No commit message provided.",
     emptyMessage: "Aborting commit due to empty commit message.",
@@ -42,21 +56,14 @@ const message = {
     haveRemotes: "> You have the following remotes:",
     failDetectRemotes:
       "Couldn't search the repository remotes. Please fix this issue manually.",
-    get starting(): string {
-      return `Executing git push ${config.remote} ${config.branch}`;
-    },
-
+    starting: buildPushMessage("Executing"),
+    failed: buildPushMessage("Failed executing"),
+    success: buildPushMessage("Successfully executed"),
     get noUse() {
-      return `Either you do not have access to use '${config.remote}' remote repository or it does not exist.`;
-    },
-    get failed() {
-      return `Couldn't send the local commits to the ${config.remote} repository.`;
-    },
-    get success() {
-      return `Sent the local commits to the ${config.remote} repository.`;
+      return `Either you do not have access to use '${config.run.remote}' remote repository or it does not exist.`;
     },
     get remoteAddFail() {
-      return `Couldn't add ${config.remote} remote to your local repository.`;
+      return `Couldn't add ${config.run.remote} remote to your local repository.`;
     },
   },
   version: {

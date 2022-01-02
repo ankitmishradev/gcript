@@ -26,7 +26,7 @@ export const gitCommit: GusProcess = () => {
     return;
   }
 
-  const process = shell.exec(`git commit -m "${config.message}"`, {
+  const process = shell.exec(`git commit -m "${config.run.message}"`, {
     silent: true,
   });
 
@@ -48,7 +48,7 @@ export const gitCommit: GusProcess = () => {
 };
 
 const verifyMessage = () => {
-  if (!config.message) {
+  if (!config.run.message) {
     chain.commit = "warn";
     setOutput({
       status: "warn",
@@ -57,7 +57,7 @@ const verifyMessage = () => {
     return "warn";
   }
 
-  if (config.message?.length === 0) {
+  if (config.run.message?.length === 0) {
     chain.commit = "failed";
     setOutput({
       status: "failed",
@@ -66,7 +66,7 @@ const verifyMessage = () => {
     return "failed";
   }
 
-  if (config.message === ".") {
+  if (config.run.message === ".") {
     commitViaEditor();
     return "handled";
   }
@@ -88,7 +88,7 @@ export const resolveGitCommitWarn = () => {
       } else if (commitMessage === ".") {
         commitViaEditor();
       } else {
-        config.message = commitMessage;
+        config.run.message = commitMessage;
         commitInvestigate.close();
         processAfterAdd(); // Process after resolving git commit.
       }

@@ -21,7 +21,7 @@ const startingLine = () => {
 };
 
 const endingLine = () => {
-  const message = config.trace ? output.log : output.message;
+  const message = config.global.trace ? output.log : output.message;
 
   switch (output.status) {
     case "done":
@@ -34,17 +34,3 @@ const endingLine = () => {
       return `\r${message}`;
   }
 };
-
-// const loadingChar = ["\\", "|", "/", "-"]; // Initialize loading characters
-// let currentCharIndex = 0; // Initialize current index of loading character.
-// // Loader function.
-// const loader = () => {
-//   process.stdout.write("\r" + loadingChar[currentCharIndex++]);
-//   currentCharIndex &= 3;
-// };
-
-// setInterval(loader, 100).ref();
-
-// // Moving cursor by 2 space to the right from the start of the line to make visible and
-// // to put a space between loading animation and starting message.
-// process.stdout.moveCursor(1, 0);

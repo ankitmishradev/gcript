@@ -2,14 +2,40 @@ type GusProcess = () => void;
 
 type GusExitProcess = (error?: string) => void;
 
-type GusConfigProps = "message" | "file" | "remote" | "trace" | "branch";
-type GusConfigValues = string | string[] | boolean;
 interface GusConfig {
-  message?: string;
-  file?: string[];
-  remote?: string;
-  trace?: boolean;
-  branch?: string;
+  global: GusGlobalConfig;
+  run: GusRunConfig;
+  version: GusVersionConfig;
+  upgrade: GusUpgradeConfig;
+}
+type GusConfigProps = "global" | "run" | "version" | "upgrade";
+type GusConfigValues =
+  | GusGlobalConfig
+  | GusRunConfig
+  | GusVersionConfig
+  | GusUpgradeConfig;
+type GusConfigAction =
+  | { key: "global"; value: GusGlobalConfig }
+  | { key: "run"; value: GusRunConfig }
+  | { key: "version"; value: GusVersionConfig }
+  | { key: "upgrade"; value: GusUpgradeConfig };
+
+interface GusGlobalConfig {
+  trace: boolean;
+  version: string;
+}
+interface GusRunConfig {
+  file: string[];
+  message: string | undefined;
+  remote: string | undefined;
+  branch: string | undefined;
+}
+interface GusVersionConfig {
+  latest: boolean;
+}
+interface GusUpgradeConfig {
+  local: boolean;
+  global: boolean;
 }
 
 type GusChainProps = "init" | "add" | "commit" | "push" | "version";

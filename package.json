@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "tsc && node dist/index.js -h.",
+    "start": "tsc && node dist/index.js upgrade.",
     "test": "npm uninstall -g gus && tsc && npm i -g",
     "build": "tsc"
   },
