@@ -1,6 +1,7 @@
 import chalk from "chalk";
 
 export const exitProcess: GusExitProcess = (error) => {
+  console.log("hey nrp");
   if (error === "1") {
     console.log(`\n> Exiting process with code 1.`);
     process.exit(1);
