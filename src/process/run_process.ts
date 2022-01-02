@@ -57,6 +57,7 @@ export const processAfterAdd = () => {
 
 export const processAfterCommit = () => {
   gitPush();
+  console.log("heuyuguygereyrugfgefvev");
   switch (chain.push) {
     case "done":
       exitProcess(); // Exiting because process ends successfully.

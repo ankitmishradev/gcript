@@ -17,11 +17,11 @@ export const printProcess = () => {
 const startingLine = () => {
   process.stdout.write("\x1B[?25l"); // Disabling cli cursor.
 
-  process.stdout.write(`\r> ${output.message!}`); // Writing starting message in the cli.
+  process.stdout.write(`\r> ${output.message?.trim()}`); // Writing starting message in the cli.
 };
 
 const endingLine = () => {
-  const message = config.global.trace ? output.log : output.message;
+  const message = (config.global.trace ? output.log : output.message)?.trim();
 
   switch (output.status) {
     case "done":
