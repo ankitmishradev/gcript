@@ -62,6 +62,8 @@ const message = {
     noMessage: 'No commit message provided.',
     emptyMessage: 'Aborting commit due to empty commit message.',
     inEditor: 'Waiting for your editor to close the file',
+    inEditorSuccess: 'Successfully executed git commit',
+    inEditorFailed: 'Failed executing executed git commit',
   },
   push: {
     emptyName: "An empty string couldn't be used as remote name.",

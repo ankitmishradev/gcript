@@ -108,7 +108,7 @@ const commitViaEditor = () => {
     chain.commit = 'failed';
     setOutput({
       status: 'failed',
-      message: message.commit.emptyMessage,
+      message: message.commit.inEditorFailed,
       log: process.stderr,
     });
     exitProcess('1');
@@ -116,7 +116,7 @@ const commitViaEditor = () => {
     chain.commit = 'done';
     setOutput({
       status: 'done',
-      message: message.commit.success,
+      message: message.commit.inEditorSuccess,
       log: process.stdout,
     });
     processAfterCommit();
