@@ -1,29 +1,29 @@
-import { printProcess } from "../process";
+import { printProcess } from '../process';
 
-const cliOutStatus = ["running", "failed", "done", "warn", "handled"];
+const cliOutStatus = ['running', 'failed', 'done', 'warn', 'handled'];
 
 const cliOutObject: GusOutput = {};
 
 const cliOutHandler: ProxyHandler<typeof cliOutObject> = {
   set: (target, prop: GusOutputProps, value: GusOutputStatus | string) => {
     switch (prop) {
-      case "status":
+      case 'status':
         if (!cliOutStatus.includes(value)) {
-          throw new TypeError("The status must be GusCliOutStatus.");
+          throw new TypeError('The status must be GusCliOutStatus.');
         } else {
           target.status = value as GusOutputStatus;
         }
         break;
-      case "message":
+      case 'message':
         if (value.length === 0) {
-          throw new EvalError("Message can not be empty");
+          throw new EvalError('Message can not be empty');
         } else {
           target.message = value;
         }
         break;
-      case "log":
+      case 'log':
         if (value.length === 0) {
-          throw new EvalError("Log can not be empty");
+          throw new EvalError('Log can not be empty');
         } else {
           target.log = value;
         }

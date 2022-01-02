@@ -1,7 +1,7 @@
-import chalk from "chalk";
+import chalk from 'chalk';
 
 export const exitProcess: GusExitProcess = (error) => {
-  if (error === "1") {
+  if (error === '1') {
     console.log(`\n> Exiting process with code 1.`);
     process.exit(1);
   } else if (error) {

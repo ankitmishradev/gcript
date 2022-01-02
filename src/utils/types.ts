@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 type GusProcess = () => void;
 
 type GusExitProcess = (error?: string) => void;
@@ -8,17 +9,17 @@ interface GusConfig {
   version: GusVersionConfig;
   upgrade: GusUpgradeConfig;
 }
-type GusConfigProps = "global" | "run" | "version" | "upgrade";
+type GusConfigProps = 'global' | 'run' | 'version' | 'upgrade';
 type GusConfigValues =
   | GusGlobalConfig
   | GusRunConfig
   | GusVersionConfig
   | GusUpgradeConfig;
 type GusConfigAction =
-  | { key: "global"; value: GusGlobalConfig }
-  | { key: "run"; value: GusRunConfig }
-  | { key: "version"; value: GusVersionConfig }
-  | { key: "upgrade"; value: GusUpgradeConfig };
+  | { key: 'global'; value: GusGlobalConfig }
+  | { key: 'run'; value: GusRunConfig }
+  | { key: 'version'; value: GusVersionConfig }
+  | { key: 'upgrade'; value: GusUpgradeConfig };
 
 interface GusGlobalConfig {
   trace: boolean;
@@ -38,8 +39,8 @@ interface GusUpgradeConfig {
   global: boolean;
 }
 
-type GusChainProps = "init" | "add" | "commit" | "push" | "version";
-type GusChainValues = "done" | "failed" | "warn" | "dead";
+type GusChainProps = 'init' | 'add' | 'commit' | 'push' | 'version';
+type GusChainValues = 'done' | 'failed' | 'warn' | 'dead';
 interface GusChain {
   init: GusChainValues;
   add: GusChainValues;
@@ -48,8 +49,8 @@ interface GusChain {
   version: GusChainValues;
 }
 
-type GusOutputStatus = "running" | "failed" | "done" | "warn" | "handled";
-type GusOutputProps = "status" | "message" | "log";
+type GusOutputStatus = 'running' | 'failed' | 'done' | 'warn' | 'handled';
+type GusOutputProps = 'status' | 'message' | 'log';
 interface GusOutput {
   status?: GusOutputStatus;
   message?: string;

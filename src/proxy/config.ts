@@ -1,11 +1,11 @@
 const configObject: GusConfig = {
   global: {
     trace: false,
-    version: "1.0.0",
+    version: '1.0.0',
   },
   run: {
-    file: ["."],
-    branch: "main",
+    file: ['.'],
+    branch: 'main',
     message: undefined,
     remote: undefined,
   },
@@ -20,12 +20,12 @@ const configObject: GusConfig = {
 
 const configHandler: ProxyHandler<typeof configObject> = {
   set: (target, prop: GusConfigProps, value: GusConfigValues) => {
-    if (prop === "run") {
+    if (prop === 'run') {
       target.run = resolveRunConfig(value as GusRunConfig);
       return true;
     }
 
-    if (prop === "global") {
+    if (prop === 'global') {
       target.global = resolveGlobalConfig(value as GusGlobalConfig);
     }
 

@@ -1,17 +1,15 @@
-import readline from "readline";
-import shell from "shelljs";
+import readline from 'readline';
+import shell from 'shelljs';
 
-import message from "../utils/message";
-import { chain, config, setOutput } from "../proxy";
-import { processAfterCommit, exitProcess } from "../process";
-import { gitCommit } from ".";
-import { exit } from "process";
+import message from '../utils/message';
+import { chain, config, setOutput } from '../proxy';
+import { processAfterCommit, exitProcess } from '../process';
 
 export const gitPush: GusProcess = async () => {
-  setOutput({ status: "running", message: message.push.starting });
+  setOutput({ status: 'running', message: message.push.starting });
 
   const verification = verifyRemote();
-  if (verification !== "done") {
+  if (verification !== 'done') {
     return;
   }
 
@@ -19,20 +17,20 @@ export const gitPush: GusProcess = async () => {
     `git push ${config.run.remote} ${config.run.branch}`,
     {
       silent: true,
-    }
+    },
   );
 
   if (process.code !== 0) {
-    chain.push = "failed";
+    chain.push = 'failed';
     setOutput({
-      status: "failed",
+      status: 'failed',
       message: message.push.failed,
       log: process.stderr,
     });
   } else {
-    chain.push = "done";
+    chain.push = 'done';
     setOutput({
-      status: "done",
+      status: 'done',
       message: message.push.success,
       log: process.stdout,
     });
@@ -41,45 +39,45 @@ export const gitPush: GusProcess = async () => {
 
 const verifyRemote = () => {
   if (!config.run.remote) {
-    chain.push = "warn";
+    chain.push = 'warn';
     setOutput({
-      status: "warn",
+      status: 'warn',
       message: message.push.noRemote,
     });
-    return "warn";
+    return 'warn';
   }
 
   if (config.run.remote?.length === 0) {
-    chain.push = "failed";
+    chain.push = 'failed';
     setOutput({
-      status: "failed",
+      status: 'failed',
       message: message.push.emptyName,
     });
-    return "failed";
+    return 'failed';
   }
 
-  return "done";
+  return 'done';
 };
 
 export const resolveGitPushWarn = () => {
-  setOutput({ status: "running", message: message.push.detectRemotes });
-  const process = shell.exec("git remote", { silent: true });
+  setOutput({ status: 'running', message: message.push.detectRemotes });
+  const process = shell.exec('git remote', { silent: true });
   const remoteListStr = process.stdout.trim();
 
   if (process.code !== 0) {
-    setOutput({ status: "failed", message: message.push.failDetectRemotes });
-    exitProcess("1");
+    setOutput({ status: 'failed', message: message.push.failDetectRemotes });
+    exitProcess('1');
   } else {
     if (remoteListStr.length === 0) {
-      setOutput({ status: "handled", message: message.push.findNoRemote });
+      setOutput({ status: 'handled', message: message.push.findNoRemote });
       addGitRemote();
-    } else if (remoteListStr.includes("origin")) {
-      setOutput({ status: "done", message: message.push.findOriginRemote });
-      config.run.remote = "origin";
+    } else if (remoteListStr.includes('origin')) {
+      setOutput({ status: 'done', message: message.push.findOriginRemote });
+      config.run.remote = 'origin';
       processAfterCommit();
     } else {
-      setOutput({ status: "handled", message: message.push.haveRemotes });
-      const remoteList = remoteListStr.split("\n");
+      setOutput({ status: 'handled', message: message.push.haveRemotes });
+      const remoteList = remoteListStr.split('\n');
       chooseGitRemote(remoteList);
     }
   }
@@ -90,16 +88,16 @@ const addGitRemote = () => {
     input: process.stdin,
     output: process.stdout,
   });
-  investigate.question("\n? Enter remote url : ", (remoteUrl) => {
+  investigate.question('\n? Enter remote url : ', (remoteUrl) => {
     if (remoteUrl.length === 0) {
       exitProcess(message.push.emptyName); // Exiting due to empty remote url.
     } else {
-      investigate.question("? Enter remote name : ", (remoteName) => {
+      investigate.question('? Enter remote name : ', (remoteName) => {
         if (remoteName.length === 0) {
           exitProcess(message.push.emptyName); // Exiting due to empty remote name.
         } else {
           const process = shell.exec(
-            `git remote add ${remoteName} ${remoteUrl}`
+            `git remote add ${remoteName} ${remoteUrl}`,
           );
           if (process.code === 0) {
             config.run.remote = remoteName;
@@ -107,7 +105,7 @@ const addGitRemote = () => {
             processAfterCommit(); // Process after resolving git push warning.
           } else {
             exitProcess(
-              config.global.trace ? process.stderr : message.push.remoteAddFail
+              config.global.trace ? process.stderr : message.push.remoteAddFail,
             ); // Exiting because couldn't add new remote.
           }
         }
@@ -117,7 +115,7 @@ const addGitRemote = () => {
 };
 
 const chooseGitRemote = (remoteList: string[]) => {
-  let remoteListStr: string = "> ";
+  let remoteListStr = '> ';
 
   for (let i = 0; i < remoteList.length; i++) {
     remoteListStr = remoteListStr + `${i + 1}. ${remoteList[i]}  `;
@@ -131,7 +129,7 @@ const chooseGitRemote = (remoteList: string[]) => {
   });
 
   investigate.question(
-    "? Enter remote name from the above list or another remote url : ",
+    '? Enter remote name from the above list or another remote url : ',
     (remote) => {
       if (remote.length === 0) {
         exitProcess(message.push.noUse); // Exiting because empty remote entered.
@@ -140,6 +138,6 @@ const chooseGitRemote = (remoteList: string[]) => {
         investigate.close();
         processAfterCommit(); // Process after resolving git push warning.
       }
-    }
+    },
   );
 };

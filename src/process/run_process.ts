@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 
 import {
   gitInit,
@@ -7,17 +7,17 @@ import {
   gitPush,
   resolveGitCommitWarn,
   resolveGitPushWarn,
-} from "../actions";
-import { chain } from "../proxy";
-import { exitProcess } from "./exit_process";
+} from '../actions';
+import { chain } from '../proxy';
+import { exitProcess } from './exit_process';
 
 export const runProcess = () => {
-  fs.readdir(`${__dirname}/../../.git`, (err, _) => {
+  fs.readdir(`${__dirname}/../../.git`, (err) => {
     if (err) {
       if (err.errno === -4058) {
         gitInit();
-        if (chain.init === "failed") {
-          exitProcess("1"); // Exiting process because git init failed.
+        if (chain.init === 'failed') {
+          exitProcess('1'); // Exiting process because git init failed.
         }
       }
     }
@@ -28,12 +28,12 @@ export const runProcess = () => {
 const processAfterInit = () => {
   gitAdd();
   switch (chain.add) {
-    case "done":
+    case 'done':
       processAfterAdd(); // Process after successful git add.
       break;
 
-    case "failed":
-      exitProcess("1"); // Exiting because git add failed.
+    case 'failed':
+      exitProcess('1'); // Exiting because git add failed.
       break;
   }
 };
@@ -41,16 +41,16 @@ const processAfterInit = () => {
 export const processAfterAdd = () => {
   gitCommit();
   switch (chain.commit) {
-    case "done":
+    case 'done':
       processAfterCommit(); // Process after successful git commit.
       break;
 
-    case "warn":
+    case 'warn':
       resolveGitCommitWarn(); // Resolve git commit warning.
       break;
 
-    case "failed":
-      exitProcess("1"); // Exiting because git commit failed.
+    case 'failed':
+      exitProcess('1'); // Exiting because git commit failed.
       break;
   }
 };
@@ -58,16 +58,16 @@ export const processAfterAdd = () => {
 export const processAfterCommit = () => {
   gitPush();
   switch (chain.push) {
-    case "done":
+    case 'done':
       exitProcess(); // Exiting because process ends successfully.
       break;
 
-    case "warn":
+    case 'warn':
       resolveGitPushWarn(); // Resolve git push warning.
       break;
 
-    case "failed":
-      exitProcess("1"); // Exiting because git push failed.
+    case 'failed':
+      exitProcess('1'); // Exiting because git push failed.
       break;
   }
 };

@@ -1,21 +1,21 @@
-import chalk from "chalk";
+import chalk from 'chalk';
 
-import { config, output } from "../proxy";
+import { config, output } from '../proxy';
 
 export const printProcess = () => {
-  if (output.status === "running") {
+  if (output.status === 'running') {
     startingLine();
   } else {
     process.stdout.clearLine(0); // Clearing the whole line including loading animation.
 
     process.stdout.write(endingLine()); // Writing output trace in the cli.
 
-    process.stdout.write("\x1b[?25h" + "\n");
+    process.stdout.write('\x1b[?25h' + '\n');
   }
 };
 
 const startingLine = () => {
-  process.stdout.write("\x1B[?25l"); // Disabling cli cursor.
+  process.stdout.write('\x1B[?25l'); // Disabling cli cursor.
 
   process.stdout.write(`\r> ${output.message?.trim()}`); // Writing starting message in the cli.
 };
@@ -24,11 +24,11 @@ const endingLine = () => {
   const message = (config.global.trace ? output.log : output.message)?.trim();
 
   switch (output.status) {
-    case "done":
+    case 'done':
       return chalk.green(`\r✓ ${message}`);
-    case "failed":
+    case 'failed':
       return chalk.red(`\r⨉ ${message}`);
-    case "warn":
+    case 'warn':
       return chalk.yellow(`\r! ${message}`);
     default:
       return `\r${message}`;

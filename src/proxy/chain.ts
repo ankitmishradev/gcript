@@ -1,9 +1,9 @@
 const chainObject: GusChain = {
-  init: "dead",
-  add: "dead",
-  commit: "dead",
-  push: "dead",
-  version: "dead",
+  init: 'dead',
+  add: 'dead',
+  commit: 'dead',
+  push: 'dead',
+  version: 'dead',
 };
 
 const chainHandler: ProxyHandler<typeof chainObject> = {
