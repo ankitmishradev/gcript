@@ -1,7 +1,7 @@
 import shell from "shelljs";
 
 import { setOutput, chain } from "../proxy";
-import message from "../utils/messages";
+import message from "../utils/message";
 
 export const gitInit: GusProcess = () => {
   setOutput({

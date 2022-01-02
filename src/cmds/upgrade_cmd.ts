@@ -4,7 +4,7 @@ import { Command } from "commander";
 import { setOutput } from "../proxy";
 import chalk from "chalk";
 import { exitProcess } from "../process";
-import message from "../utils/messages";
+import message from "../utils/message";
 
 export const upgradeCmd = (program: Command) => {
   program

@@ -3,7 +3,7 @@ import semver from "semver";
 import chalk from "chalk";
 
 import { chain, setOutput } from "../proxy";
-import message from "../utils/messages";
+import message from "../utils/message";
 import { Command } from "commander";
 
 const currentVersion = "1.0.0";

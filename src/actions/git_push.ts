@@ -1,7 +1,7 @@
 import readline from "readline";
 import shell from "shelljs";
 
-import message from "../utils/messages";
+import message from "../utils/message";
 import { chain, config, setOutput } from "../proxy";
 import { processAfterCommit, exitProcess } from "../process";
 import { gitCommit } from ".";
@@ -76,7 +76,7 @@ export const resolveGitPushWarn = () => {
     } else if (remoteListStr.includes("origin")) {
       setOutput({ status: "done", message: message.push.findOriginRemote });
       config.run.remote = "origin";
-      gitPush();
+      processAfterCommit();
     } else {
       setOutput({ status: "handled", message: message.push.haveRemotes });
       const remoteList = remoteListStr.split("\n");

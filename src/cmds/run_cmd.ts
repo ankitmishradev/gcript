@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { Command } from "commander";
 import { runProcess } from "../process";
 import { config } from "../proxy";
-import message from "../utils/messages";
+import message from "../utils/message";
 
 export const runCmd = (program: Command) => {
   program

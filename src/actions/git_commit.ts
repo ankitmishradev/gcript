@@ -3,7 +3,7 @@ import readline from "readline";
 
 import { processAfterAdd, exitProcess, processAfterCommit } from "../process";
 import { chain, config, setOutput } from "../proxy";
-import message from "../utils/messages";
+import message from "../utils/message";
 
 export const gitCommit: GusProcess = () => {
   setOutput({ status: "running", message: message.commit.starting });

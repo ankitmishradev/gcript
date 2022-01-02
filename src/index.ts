@@ -2,7 +2,7 @@
 import chalk from "chalk";
 import { Command } from "commander";
 import { config } from "./proxy";
-import { runCmd, upgradeCmd, versionCmd } from "./commands";
+import { runCmd, upgradeCmd, versionCmd } from "./cmds";
 
 const program = new Command();
 
