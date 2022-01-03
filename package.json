@@ -1,16 +1,16 @@
 {
   "name": "gus",
   "version": "1.0.0",
-  "description": "A cli tool",
+  "description": "Git utility script, a typed nodejs cli tool to automate daily used git processes and provide utilities based on git",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "tsc && node dist/index.js upgrade.",
+    "start": "tsc && node dist/index.js config -l",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\"  --fix",
     "prebuild": "npm run lint && npm run format",
     "build": "tsc",
-    "test": "npm uninstall -g gus && tsc && npm i -g",
+    "test": "npm uninstall -g gus && npm run build && npm i -g",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
@@ -22,15 +22,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ankitmishradev/awesome-ui.git"
+    "url": "git+https://github.com/ankitmishradev/gus.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ankitmishradev/awesome-ui/issues"
+    "url": "https://github.com/ankitmishradev/gus/issues"
   },
-  "homepage": "https://github.com/ankitmishradev/awesome-ui#readme",
+  "homepage": "https://github.com/ankitmishradev/gus#readme",
   "files": [
     "dist/**/*"
   ],

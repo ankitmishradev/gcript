@@ -15,7 +15,7 @@ export const upgradeCmd = (program: Command) => {
     .option('-g, --global', 'Update globally installed gus');
 };
 
-export const upgradeAction = (config: GusUpgradeConfig) => {
+export const upgradeAction = () => {
   console.log(message.common.starting);
 
   setOutput({

@@ -94,6 +94,14 @@ const message = {
   version: {
     starting: 'Hold on a second, getting information',
   },
+  config: {
+    readStarting: 'Hold on a second, getting configurations',
+    noConfigFile: '> You do not have any global configuration of gus.',
+    setStarting: 'Changing global configuration of gus',
+    setSuccess: `Changed global configuration of gus.`,
+    setFailed: `Failed changing global configuration of gus.`,
+    setFailedInvalid: 'You have used wrong to change configuration.',
+  },
 };
 
 export default message;

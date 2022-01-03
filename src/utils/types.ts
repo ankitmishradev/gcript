@@ -56,3 +56,16 @@ interface GusOutput {
   message?: string;
   log?: string;
 }
+
+interface GusPermConfig {
+  remote: GusRunConfig['remote'];
+  trace: GusGlobalConfig['trace'];
+  branch: GusRunConfig['branch'];
+}
+
+type GusPermConfigKey = 'remote' | 'trace' | 'branch';
+
+type GusPermConfigOption = {
+  set: string | undefined;
+  list: string | undefined | boolean;
+};

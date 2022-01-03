@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
 import { config } from './proxy';
-import { runCmd, upgradeCmd, versionCmd } from './cmd';
+import { runCmd, upgradeCmd, versionCmd, configCmd } from './cmd';
 
 const program = new Command();
 
@@ -29,6 +29,7 @@ Visit ${chalk.cyan(
 );
 
 runCmd(program);
+configCmd(program);
 versionCmd(program);
 upgradeCmd(program);
 
