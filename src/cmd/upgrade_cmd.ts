@@ -1,8 +1,8 @@
 import shell from 'shelljs';
+import chalk from 'chalk';
 import { Command } from 'commander';
 
 import { setOutput } from '../proxy';
-import chalk from 'chalk';
 import { exitProcess } from '../process';
 import message from '../utils/message';
 

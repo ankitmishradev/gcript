@@ -24,6 +24,7 @@ export const setConfig = (value: string) => {
 
   if (!pair) {
     setOutput({ status: 'failed', message: message.config.setFailedInvalid });
+    exitProcess('1');
     return;
   }
 
@@ -63,8 +64,11 @@ const resolveConfigPair = (pair: string) => {
   } else {
     const breakpoint = pair.indexOf('=');
     const key = pair.substring(0, breakpoint) as GusPermConfigKey;
-    const value = pair.substring(breakpoint + 1);
-
-    return { [key]: value };
+    if (key in initPermConfig) {
+      const value = pair.substring(breakpoint + 1);
+      return { [key]: value };
+    } else {
+      return null;
+    }
   }
 };

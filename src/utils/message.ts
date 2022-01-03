@@ -100,7 +100,8 @@ const message = {
     setStarting: 'Changing global configuration of gus',
     setSuccess: `Changed global configuration of gus.`,
     setFailed: `Failed changing global configuration of gus.`,
-    setFailedInvalid: 'You have used wrong to change configuration.',
+    setFailedInvalid:
+      'Either you have used wrong to pattern to change configuration or the property you are trying to change does not exist in gus configuration.',
   },
 };
 

@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { chain, setOutput } from '../proxy';
 import message from '../utils/message';
 import { Command } from 'commander';
+import { exitProcess } from '../process';
 
 const currentVersion = '1.0.0';
 
@@ -43,17 +44,21 @@ const runAction: GusProcess = async () => {
         status: 'handled',
         message: currentVersionMsg(false) + suggestion,
       });
+      exitProcess();
     } else {
       setOutput({
         status: 'handled',
         message: currentVersionMsg(true),
       });
+      exitProcess();
     }
+    exitProcess();
   } else {
     setOutput({
       status: 'handled',
       message: currentVersionMsg(false),
     });
+    exitProcess();
   }
 };
 

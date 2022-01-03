@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
 import { Command } from 'commander';
+
 import { config } from './proxy';
 import { runCmd, upgradeCmd, versionCmd, configCmd } from './cmd';
 
@@ -28,13 +29,13 @@ Visit ${chalk.cyan(
   )} to see the full documentation.`,
 );
 
+const gConfig = program.opts<GusGlobalConfig>();
+
+config.global = gConfig;
+
 runCmd(program);
 configCmd(program);
 versionCmd(program);
 upgradeCmd(program);
-
-const gConfig = program.opts<GusGlobalConfig>();
-
-config.global = gConfig;
 
 program.parse(process.argv);
