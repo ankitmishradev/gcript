@@ -1,3 +1,5 @@
+[![build](https://github.com/ankitmishradev/gus/actions/workflows/build.yml/badge.svg)](https://github.com/ankitmishradev/gus/actions/workflows/build.yml)
+
 # GUS - Git Utility Script
 
 A typed nodejs cli tool to automate daily used git processes and provide utilities based on git.
