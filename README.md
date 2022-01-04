@@ -2,6 +2,7 @@
 ![Typescript](https://img.shields.io/github/languages/top/ankitmishradev/gcript)
 ![MIT License](https://img.shields.io/github/license/ankitmishradev/gcript)
 [![CodeFactor](https://www.codefactor.io/repository/github/ankitmishradev/gcript/badge)](https://www.codefactor.io/repository/github/ankitmishradev/gcript)
+![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/ankitmishradev/gcript)
 
 # Gcript
 
