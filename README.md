@@ -1,6 +1,6 @@
 [![build](https://github.com/ankitmishradev/gcript/actions/workflows/build.yml/badge.svg)](https://github.com/ankitmishradev/gcript/actions/workflows/build.yml)
 ![Typescript](https://img.shields.io/github/languages/top/ankitmishradev/gcript)
-[![MIT License](https://github.com/ankitmishradev/gcript/blob/main/LICENSE)](https://img.shields.io/github/license/ankitmishradev/gcript)
+![MIT License](https://img.shields.io/github/license/ankitmishradev/gcript)
 [![CodeFactor](https://www.codefactor.io/repository/github/ankitmishradev/gcript/badge)](https://www.codefactor.io/repository/github/ankitmishradev/gcript)
 
 # Gcript
