@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { which } from 'shelljs';
 
 import {
   gitInit,
@@ -12,17 +13,24 @@ import { chain } from '../proxy';
 import { exitProcess } from './exit_process';
 
 export const runProcess = () => {
-  fs.readdir(`${__dirname}/../../.git`, (err) => {
-    if (err) {
-      if (err.errno === -4058) {
-        gitInit();
-        if (chain.init === 'failed') {
-          exitProcess('1'); // Exiting process because git init failed.
+  if (!which('git')) {
+    console.log(
+      '> Git is not installed on your machine. Please install git to work with gus.',
+    );
+    exitProcess('1');
+  } else {
+    fs.readdir(`${__dirname}/../../.git`, (err) => {
+      if (err) {
+        if (err.errno === -4058) {
+          gitInit();
+          if (chain.init === 'failed') {
+            exitProcess('1'); // Exiting process because git init failed.
+          }
         }
       }
-    }
-    processAfterInit();
-  });
+      processAfterInit();
+    });
+  }
 };
 
 const processAfterInit = () => {

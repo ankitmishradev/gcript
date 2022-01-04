@@ -38,7 +38,6 @@ export const gitPush: GusProcess = async () => {
 };
 
 const verifyRemote = () => {
-  console.log('Asdfgh', config.run.remote);
   if (!config.run.remote) {
     chain.push = 'warn';
     setOutput({

@@ -62,7 +62,7 @@ const resolveGlobalConfig = (value: GusGlobalConfig) => {
   }
 
   if (value.trace === undefined) {
-    value.trace = false;
+    value.trace = config.global.trace;
   }
 
   return value;
