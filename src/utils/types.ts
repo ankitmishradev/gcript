@@ -6,20 +6,12 @@ type GusExitProcess = (error?: string) => void;
 interface GusConfig {
   global: GusGlobalConfig;
   run: GusRunConfig;
-  version: GusVersionConfig;
-  upgrade: GusUpgradeConfig;
 }
-type GusConfigProps = 'global' | 'run' | 'version' | 'upgrade';
-type GusConfigValues =
-  | GusGlobalConfig
-  | GusRunConfig
-  | GusVersionConfig
-  | GusUpgradeConfig;
+type GusConfigProps = 'global' | 'run';
+type GusConfigValues = GusGlobalConfig | GusRunConfig;
 type GusConfigAction =
   | { key: 'global'; value: GusGlobalConfig }
-  | { key: 'run'; value: GusRunConfig }
-  | { key: 'version'; value: GusVersionConfig }
-  | { key: 'upgrade'; value: GusUpgradeConfig };
+  | { key: 'run'; value: GusRunConfig };
 
 interface GusGlobalConfig {
   trace: boolean;
@@ -31,22 +23,14 @@ interface GusRunConfig {
   remote: string | undefined;
   branch: string | undefined;
 }
-interface GusVersionConfig {
-  latest: boolean;
-}
-interface GusUpgradeConfig {
-  local: boolean;
-  global: boolean;
-}
 
-type GusChainProps = 'init' | 'add' | 'commit' | 'push' | 'version';
+type GusChainProps = 'init' | 'add' | 'commit' | 'push';
 type GusChainValues = 'done' | 'failed' | 'warn' | 'dead';
 interface GusChain {
   init: GusChainValues;
   add: GusChainValues;
   commit: GusChainValues;
   push: GusChainValues;
-  version: GusChainValues;
 }
 
 type GusOutputStatus = 'running' | 'failed' | 'done' | 'warn' | 'handled';

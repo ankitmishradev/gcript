@@ -2,19 +2,17 @@ import shell from 'shelljs';
 import semver from 'semver';
 import chalk from 'chalk';
 
-import { chain, setOutput } from '../proxy';
+import { config, setOutput } from '../proxy';
 import message from '../utils/message';
 import { Command } from 'commander';
 import { exitProcess } from '../process';
 
-const currentVersion = '1.0.0';
-
 export const versionCmd = (program: Command) => {
   program
     .command('version')
+    .alias('ver')
     .description('Display current version of gus.')
-    .action(runAction)
-    .option('-l, --latest', 'Display latest version of gus available on npm');
+    .action(runAction);
 };
 
 const runAction: GusProcess = async () => {
@@ -22,15 +20,16 @@ const runAction: GusProcess = async () => {
 
   setOutput({ status: 'running', message: message.version.starting });
 
-  const latestVersion = shell.exec('npm view css-class-builder version', {
+  const latestVersion = shell.exec('npm view gus version', {
     silent: true,
     timeout: 5000,
   });
 
-  chain.version = 'done';
-
   if (latestVersion.code === 0) {
-    const newVersAvail = semver.gt(latestVersion.stdout, currentVersion!);
+    const newVersAvail = semver.gt(
+      latestVersion.stdout,
+      config.global.version!,
+    );
 
     if (newVersAvail) {
       const suggestion = chalk.yellow(
@@ -64,8 +63,8 @@ const runAction: GusProcess = async () => {
 
 const currentVersionMsg = (latest: boolean) => {
   if (latest) {
-    return `> v${currentVersion} latest`;
+    return `> v${config.global.version} latest`;
   } else {
-    return `> v${currentVersion}`;
+    return `> v${config.global.version}`;
   }
 };

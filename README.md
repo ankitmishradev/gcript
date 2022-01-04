@@ -46,6 +46,8 @@ Install using `yarn`
 yarn global add gus
 ```
 
+> Please make sure to install gus either as global or local package otherwise conflict between local and global package might introduce unexpected behaviors.
+
 ## Commands
 
 Gus provides commands to do operation such as running the main thread or configuring the gus etc. These commands can be further configured for a specific use case using command options or global configurations.
@@ -77,7 +79,7 @@ gus run [options]
 
 ### Config command
 
-`config` command deals with global configurations of gus. It stores the configurations as `json` at the installation location of gus. Configuration can be changed or viewed at any time using `config` command. To note that local configurations take precedence over global configurations.
+Config command deals with global configurations of gus. It stores the configurations as `json` at the installation location of gus. Configuration can be changed or viewed at any time using `config` command. Note that local configurations take precedence over global configurations.
 
 #### Usage
 

@@ -27,9 +27,12 @@ const message = {
   common: {
     emptyString:
       'Your response seems to be an empty string which is not valid.',
-    starting: `> Starting process with ${chalk.cyan(
-      `gus@${config.global.version}`,
-    )}\n`,
+
+    get starting(): string {
+      return `> Starting process with ${chalk.cyan(
+        `gus@${config.global.version}`,
+      )}\n`;
+    },
   },
   init: {
     failed: 'Failed executing git init.',
@@ -93,6 +96,15 @@ const message = {
   },
   version: {
     starting: 'Hold on a second, getting information',
+  },
+  upgrade: {
+    checkingInfo: 'Hold on a second, checking information',
+    doneCheckingInfo: 'Successfully retrieved information.',
+    startUpdate: 'Updating gus. This might take a while',
+    doneUpdate: `Successfully updated gus. Run ${chalk.cyan(
+      'gus version',
+    )} to check current verion.`,
+    failUpdate: 'Failed updating gus. Please try again.',
   },
   config: {
     readStarting: 'Hold on a second, getting configurations',

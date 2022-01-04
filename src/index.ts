@@ -4,6 +4,7 @@ import { Command } from 'commander';
 
 import { config } from './proxy';
 import { runCmd, upgradeCmd, versionCmd, configCmd } from './cmd';
+import useVersion from './utils/use_version';
 
 const program = new Command();
 
@@ -32,6 +33,8 @@ Visit ${chalk.cyan(
 const gConfig = program.opts<GusGlobalConfig>();
 
 config.global = gConfig;
+
+useVersion();
 
 runCmd(program);
 configCmd(program);

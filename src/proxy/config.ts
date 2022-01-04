@@ -3,20 +3,13 @@ import useConfigFile from '../utils/use_config_file';
 const configObject: GusConfig = {
   global: {
     trace: (useConfigFile('trace') as boolean) ?? false,
-    version: '1.0.0',
+    version: '',
   },
   run: {
     file: ['.'],
     branch: (useConfigFile('branch') as string) ?? 'main',
     message: undefined,
     remote: useConfigFile('remote') as string,
-  },
-  version: {
-    latest: false,
-  },
-  upgrade: {
-    local: true,
-    global: false,
   },
 };
 

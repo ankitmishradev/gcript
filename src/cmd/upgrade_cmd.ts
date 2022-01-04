@@ -1,5 +1,4 @@
 import shell from 'shelljs';
-import chalk from 'chalk';
 import { Command } from 'commander';
 
 import { setOutput } from '../proxy';
@@ -9,10 +8,9 @@ import message from '../utils/message';
 export const upgradeCmd = (program: Command) => {
   program
     .command('upgrade')
+    .alias('upg')
     .description('Upgrade gus to the latest stable version.')
-    .action(upgradeAction)
-    .option('-l, --local', 'Update locally installed gus')
-    .option('-g, --global', 'Update globally installed gus');
+    .action(upgradeAction);
 };
 
 export const upgradeAction = () => {
@@ -20,12 +18,12 @@ export const upgradeAction = () => {
 
   setOutput({
     status: 'running',
-    message: 'Hold on a second, checking information.',
+    message: message.upgrade.checkingInfo,
   });
 
-  const pkgInfoProcess = shell.exec('npm ls gus', { silent: true });
+  const pkgInfoProcess = shell.exec('npm ls gus --depth=0', { silent: true });
 
-  setOutput({ status: 'done', message: 'Finished checking information.' });
+  setOutput({ status: 'done', message: message.upgrade.doneCheckingInfo });
 
   const globalPkg = pkgInfoProcess.stdout.includes('empty');
   const localPkg = pkgInfoProcess.stdout.includes('gus@');
@@ -33,7 +31,7 @@ export const upgradeAction = () => {
   if (globalPkg) {
     setOutput({
       status: 'running',
-      message: 'Updating globally installed gus. This might take a while.',
+      message: message.upgrade.startUpdate,
     });
 
     const process = shell.exec('npm update gus -g', { silent: true });
@@ -41,14 +39,14 @@ export const upgradeAction = () => {
     if (process.code === 0) {
       setOutput({
         status: 'done',
-        message: 'Updated globally installed gus.',
+        message: message.upgrade.doneUpdate,
         log: process.stdout,
       });
       exitProcess();
     } else {
       setOutput({
         status: 'failed',
-        message: `Couldn't update globally installed gus.`,
+        message: message.upgrade.failUpdate,
         log: process.stderr,
       });
       exitProcess('1');
@@ -68,14 +66,14 @@ export const upgradeAction = () => {
     if (process.code === 0) {
       setOutput({
         status: 'done',
-        message: 'Updated locally installed gus.',
+        message: message.upgrade.doneUpdate,
         log: process.stdout,
       });
       exitProcess();
     } else {
       setOutput({
         status: 'failed',
-        message: `Coudn't update locally installed gus.`,
+        message: message.upgrade.failUpdate,
         log: process.stderr,
       });
       exitProcess('1');
@@ -83,17 +81,4 @@ export const upgradeAction = () => {
 
     return;
   }
-
-  setOutput({
-    status: 'failed',
-    message: "Couldn't find information about where gus is installed.",
-  });
-
-  console.log(
-    `\n> Please manually specify in the command, whether to update locally installed gus or globally by passing ${chalk.cyan(
-      '-l',
-    )} or ${chalk.cyan('-g')} option.`,
-  );
-
-  exitProcess('1');
 };
