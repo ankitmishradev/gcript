@@ -7,6 +7,7 @@ const useConfigFile = (key: GusPermConfigKey) => {
   try {
     const data = fs.readFileSync(filePath, 'utf-8');
     const jsonConfig = JSON.parse(data) as GusPermConfig;
+    console.log(jsonConfig[key]);
     return jsonConfig[key];
   } catch (error) {
     return undefined;
