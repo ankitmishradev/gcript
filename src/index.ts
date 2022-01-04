@@ -34,10 +34,8 @@ const gConfig = program.opts<GusGlobalConfig>();
 config.global = gConfig;
 
 runCmd(program);
-// configCmd(program);
-// versionCmd(program);
-// upgradeCmd(program);
-
-console.log(config);
+configCmd(program);
+versionCmd(program);
+upgradeCmd(program);
 
 program.parse(process.argv);

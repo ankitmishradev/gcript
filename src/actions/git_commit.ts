@@ -6,7 +6,6 @@ import { chain, config, setOutput } from '../proxy';
 import message from '../utils/message';
 
 export const gitCommit: GusProcess = () => {
-  console.log(config.run);
   setOutput({ status: 'running', message: message.commit.starting });
 
   const treeClean = shell

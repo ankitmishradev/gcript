@@ -49,6 +49,9 @@ const resolveRunConfig = (value: GusRunConfig) => {
   if (!value.file) {
     value.file = config.run.file;
   }
+  if (!value.remote) {
+    value.remote = config.run.remote;
+  }
 
   return value;
 };
