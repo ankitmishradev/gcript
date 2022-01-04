@@ -1,7 +1,7 @@
 {
-  "name": "gus",
+  "name": "gcript",
   "version": "1.0.0",
-  "description": "Git utility script, a typed nodejs cli tool to automate daily used git processes and provide utilities based on git",
+  "description": "A nodejs cli tool to automate daily used git processes and provide utilities based on git",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "eslint \"src/**/*.ts\"  --fix",
     "prebuild": "npm run lint && npm run format",
     "build": "tsc",
-    "test": "npm uninstall -g gus && npm run build && npm i -g",
+    "test": "npm uninstall -g gcript && npm run build && npm i -g",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
@@ -17,19 +17,19 @@
     "postversion": "git push && git push --tags"
   },
   "bin": {
-    "gus": "dist/index.js"
+    "gcript": "dist/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ankitmishradev/gus.git"
+    "url": "git+https://github.com/ankitmishradev/gcript.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ankitmishradev/gus/issues"
+    "url": "https://github.com/ankitmishradev/gcript/issues"
   },
-  "homepage": "https://github.com/ankitmishradev/gus#readme",
+  "homepage": "https://github.com/ankitmishradev/gcript#readme",
   "files": [
     "dist/**/*"
   ],

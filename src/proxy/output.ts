@@ -2,16 +2,16 @@ import { printProcess } from '../process';
 
 const cliOutStatus = ['running', 'failed', 'done', 'warn', 'handled'];
 
-const cliOutObject: GusOutput = {};
+const cliOutObject: GCOutput = {};
 
 const cliOutHandler: ProxyHandler<typeof cliOutObject> = {
-  set: (target, prop: GusOutputProps, value: GusOutputStatus | string) => {
+  set: (target, prop: GCOutputProps, value: GCOutputStatus | string) => {
     switch (prop) {
       case 'status':
         if (!cliOutStatus.includes(value)) {
-          throw new TypeError('The status must be GusCliOutStatus.');
+          throw new TypeError('The status must be GCCliOutStatus.');
         } else {
-          target.status = value as GusOutputStatus;
+          target.status = value as GCOutputStatus;
         }
         break;
       case 'message':
@@ -34,14 +34,14 @@ const cliOutHandler: ProxyHandler<typeof cliOutObject> = {
 
     return true;
   },
-  get: (target, prop: GusOutputProps) => {
+  get: (target, prop: GCOutputProps) => {
     return prop in target ? target[prop] : undefined;
   },
 };
 
 export const output = new Proxy(cliOutObject, cliOutHandler);
 
-export const setOutput = (obj: GusOutput) => {
+export const setOutput = (obj: GCOutput) => {
   if (!obj.log || obj.log?.length === 0) {
     output.log = obj.message;
   } else {

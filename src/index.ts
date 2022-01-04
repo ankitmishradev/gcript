@@ -9,9 +9,11 @@ import useVersion from './utils/use_version';
 const program = new Command();
 
 program
-  .name('gus')
+  .name('gcript')
   .usage('<command> | <command> [options] | [options]')
-  .description('A cli tool to ease the process of common git operations.');
+  .description(
+    'A cli tool to automate daily used git processes and provide utilities based on git.',
+  );
 
 program.option(
   '-t, --trace',
@@ -26,11 +28,11 @@ program.addHelpText(
   'afterAll',
   `
 Visit ${chalk.cyan(
-    'https://github.com/ankitmishradev/gus#README',
+    'https://github.com/ankitmishradev/gcript#README',
   )} to see the full documentation.`,
 );
 
-const gConfig = program.opts<GusGlobalConfig>();
+const gConfig = program.opts<GCGlobalConfig>();
 
 config.global = gConfig;
 

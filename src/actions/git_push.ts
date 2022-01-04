@@ -5,7 +5,7 @@ import message from '../utils/message';
 import { chain, config, setOutput } from '../proxy';
 import { processAfterCommit, exitProcess } from '../process';
 
-export const gitPush: GusProcess = async () => {
+export const gitPush: GCProcess = async () => {
   setOutput({ status: 'running', message: message.push.starting });
 
   const verification = verifyRemote();

@@ -4,7 +4,7 @@ import { readConfig, setConfig } from '../actions';
 export const configCmd = (program: Command) => {
   program
     .command('config')
-    .description('Set and view global configurations of gus.')
+    .description('Set and view global configurations of gcript.')
     .option(
       '-s, --set <key=value>',
       'Assign <value> to <key> in global configuration',
@@ -16,7 +16,7 @@ export const configCmd = (program: Command) => {
     .action(configAction);
 };
 
-const configAction = (option: GusPermConfigOption, program: Command) => {
+const configAction = (option: GCPermConfigOption, program: Command) => {
   if (option.set) {
     setConfig(option.set);
     return;

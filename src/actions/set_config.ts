@@ -6,7 +6,7 @@ import { setOutput } from '../proxy';
 import message from '../utils/message';
 
 const filePath = path.join(__dirname, '../../config.json');
-const initPermConfig: GusPermConfig = {
+const initPermConfig: GCPermConfig = {
   branch: 'main',
   remote: undefined,
   trace: false,
@@ -52,7 +52,7 @@ const resolvePermConfig = (
     const currentConfig = initPermConfig;
     return Object.assign(currentConfig, pair);
   } else {
-    const currentConfig = JSON.parse(data) as GusPermConfig;
+    const currentConfig = JSON.parse(data) as GCPermConfig;
     return Object.assign(currentConfig, pair);
   }
 };
@@ -63,7 +63,7 @@ const resolveConfigPair = (pair: string) => {
     return null;
   } else {
     const breakpoint = pair.indexOf('=');
-    const key = pair.substring(0, breakpoint) as GusPermConfigKey;
+    const key = pair.substring(0, breakpoint) as GCPermConfigKey;
     if (key in initPermConfig) {
       const value = pair.substring(breakpoint + 1);
       return { [key]: value };

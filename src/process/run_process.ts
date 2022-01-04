@@ -15,7 +15,7 @@ import { exitProcess } from './exit_process';
 export const runProcess = () => {
   if (!which('git')) {
     console.log(
-      '> Git is not installed on your machine. Please install git to work with gus.',
+      '> Git is not installed on your machine. Please install git to work with gcript.',
     );
     exitProcess('1');
   } else {

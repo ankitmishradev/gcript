@@ -1,55 +1,55 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-type GusProcess = () => void;
+type GCProcess = () => void;
 
-type GusExitProcess = (error?: string) => void;
+type GCExitProcess = (error?: string) => void;
 
-interface GusConfig {
-  global: GusGlobalConfig;
-  run: GusRunConfig;
+interface GCConfig {
+  global: GCGlobalConfig;
+  run: GCRunConfig;
 }
-type GusConfigProps = 'global' | 'run';
-type GusConfigValues = GusGlobalConfig | GusRunConfig;
-type GusConfigAction =
-  | { key: 'global'; value: GusGlobalConfig }
-  | { key: 'run'; value: GusRunConfig };
+type GCConfigProps = 'global' | 'run';
+type GCConfigValues = GCGlobalConfig | GCRunConfig;
+type GCConfigAction =
+  | { key: 'global'; value: GCGlobalConfig }
+  | { key: 'run'; value: GCRunConfig };
 
-interface GusGlobalConfig {
+interface GCGlobalConfig {
   trace: boolean;
   version: string;
 }
-interface GusRunConfig {
+interface GCRunConfig {
   file: string[];
   message: string | undefined;
   remote: string | undefined;
   branch: string | undefined;
 }
 
-type GusChainProps = 'init' | 'add' | 'commit' | 'push';
-type GusChainValues = 'done' | 'failed' | 'warn' | 'dead';
-interface GusChain {
-  init: GusChainValues;
-  add: GusChainValues;
-  commit: GusChainValues;
-  push: GusChainValues;
+type GCChainProps = 'init' | 'add' | 'commit' | 'push';
+type GCChainValues = 'done' | 'failed' | 'warn' | 'dead';
+interface GCChain {
+  init: GCChainValues;
+  add: GCChainValues;
+  commit: GCChainValues;
+  push: GCChainValues;
 }
 
-type GusOutputStatus = 'running' | 'failed' | 'done' | 'warn' | 'handled';
-type GusOutputProps = 'status' | 'message' | 'log';
-interface GusOutput {
-  status?: GusOutputStatus;
+type GCOutputStatus = 'running' | 'failed' | 'done' | 'warn' | 'handled';
+type GCOutputProps = 'status' | 'message' | 'log';
+interface GCOutput {
+  status?: GCOutputStatus;
   message?: string;
   log?: string;
 }
 
-interface GusPermConfig {
-  remote: GusRunConfig['remote'];
-  trace: GusGlobalConfig['trace'];
-  branch: GusRunConfig['branch'];
+interface GCPermConfig {
+  remote: GCRunConfig['remote'];
+  trace: GCGlobalConfig['trace'];
+  branch: GCRunConfig['branch'];
 }
 
-type GusPermConfigKey = 'remote' | 'trace' | 'branch';
+type GCPermConfigKey = 'remote' | 'trace' | 'branch';
 
-type GusPermConfigOption = {
+type GCPermConfigOption = {
   set: string | undefined;
   list: string | undefined | boolean;
 };

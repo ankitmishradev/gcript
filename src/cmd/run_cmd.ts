@@ -27,7 +27,7 @@ export const runCmd = (program: Command) => {
     .action(runAction);
 };
 
-const runAction = (options: GusRunConfig) => {
+const runAction = (options: GCRunConfig) => {
   config.run = options;
   console.log(message.common.starting);
   runProcess();

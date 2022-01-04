@@ -36,10 +36,10 @@ const buildReadConfigMessage = (
   data: string,
   key: string | boolean | undefined,
 ) => {
-  const configuration = JSON.parse(data) as GusPermConfig;
+  const configuration = JSON.parse(data) as GCPermConfig;
   if (key && key !== true) {
     if (key in configuration) {
-      return `> ${key} : ${configuration[key as GusPermConfigKey]}`;
+      return `> ${key} : ${configuration[key as GCPermConfigKey]}`;
     } else {
       return `> ${key} is not a property of gus configurations.`;
     }
@@ -48,7 +48,7 @@ const buildReadConfigMessage = (
     for (const key in configuration) {
       if (Object.prototype.hasOwnProperty.call(configuration, key)) {
         configListStr += `> ${key} : ${
-          configuration[key as GusPermConfigKey]
+          configuration[key as GCPermConfigKey]
         }\n`;
       }
     }

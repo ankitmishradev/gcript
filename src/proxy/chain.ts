@@ -1,4 +1,4 @@
-const chainObject: GusChain = {
+const chainObject: GCChain = {
   init: 'dead',
   add: 'dead',
   commit: 'dead',
@@ -6,11 +6,11 @@ const chainObject: GusChain = {
 };
 
 const chainHandler: ProxyHandler<typeof chainObject> = {
-  set: (target, prop: GusChainProps, value: GusChainValues) => {
+  set: (target, prop: GCChainProps, value: GCChainValues) => {
     target[prop] = value;
     return true;
   },
-  get: (target, prop: GusChainProps) => {
+  get: (target, prop: GCChainProps) => {
     return prop in target ? target[prop] : undefined;
   },
 };

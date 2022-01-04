@@ -5,7 +5,7 @@ import { processAfterAdd, exitProcess, processAfterCommit } from '../process';
 import { chain, config, setOutput } from '../proxy';
 import message from '../utils/message';
 
-export const gitCommit: GusProcess = () => {
+export const gitCommit: GCProcess = () => {
   setOutput({ status: 'running', message: message.commit.starting });
 
   const treeClean = shell

@@ -30,7 +30,7 @@ const message = {
 
     get starting(): string {
       return `> Starting process with ${chalk.cyan(
-        `gus@${config.global.version}`,
+        `gcript@${config.global.version}`,
       )}\n`;
     },
   },
@@ -100,20 +100,20 @@ const message = {
   upgrade: {
     checkingInfo: 'Hold on a second, checking information',
     doneCheckingInfo: 'Successfully retrieved information.',
-    startUpdate: 'Updating gus. This might take a while',
-    doneUpdate: `Successfully updated gus. Run ${chalk.cyan(
-      'gus version',
+    startUpdate: 'Updating gcript. This might take a while',
+    doneUpdate: `Successfully updated gcript. Run ${chalk.cyan(
+      'gcript version',
     )} to check current verion.`,
-    failUpdate: 'Failed updating gus. Please try again.',
+    failUpdate: 'Failed updating gcript. Please try again.',
   },
   config: {
     readStarting: 'Hold on a second, getting configurations',
-    noConfigFile: '> You do not have any global configuration of gus.',
-    setStarting: 'Changing global configuration of gus',
-    setSuccess: `Changed global configuration of gus.`,
-    setFailed: `Failed changing global configuration of gus.`,
+    noConfigFile: '> You do not have any global configuration of gcript.',
+    setStarting: 'Changing global configuration of gcript',
+    setSuccess: `Changed global configuration of gcript.`,
+    setFailed: `Failed changing global configuration of gcript.`,
     setFailedInvalid:
-      'Either you have used wrong to pattern to change configuration or the property you are trying to change does not exist in gus configuration.',
+      'Either you have used wrong to pattern to change configuration or the property you are trying to change does not exist in gcript configuration.',
   },
 };
 

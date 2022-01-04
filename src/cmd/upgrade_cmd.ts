@@ -9,7 +9,7 @@ export const upgradeCmd = (program: Command) => {
   program
     .command('upgrade')
     .alias('upg')
-    .description('Upgrade gus to the latest stable version.')
+    .description('Upgrade gcript to the latest stable version.')
     .action(upgradeAction);
 };
 
@@ -21,12 +21,14 @@ export const upgradeAction = () => {
     message: message.upgrade.checkingInfo,
   });
 
-  const pkgInfoProcess = shell.exec('npm ls gus --depth=0', { silent: true });
+  const pkgInfoProcess = shell.exec('npm ls gcript --depth=0', {
+    silent: true,
+  });
 
   setOutput({ status: 'done', message: message.upgrade.doneCheckingInfo });
 
   const globalPkg = pkgInfoProcess.stdout.includes('empty');
-  const localPkg = pkgInfoProcess.stdout.includes('gus@');
+  const localPkg = pkgInfoProcess.stdout.includes('gcript@');
 
   if (globalPkg) {
     setOutput({
@@ -34,7 +36,7 @@ export const upgradeAction = () => {
       message: message.upgrade.startUpdate,
     });
 
-    const process = shell.exec('npm update gus -g', { silent: true });
+    const process = shell.exec('npm update gcript -g', { silent: true });
 
     if (process.code === 0) {
       setOutput({
@@ -58,10 +60,10 @@ export const upgradeAction = () => {
   if (localPkg) {
     setOutput({
       status: 'running',
-      message: 'Updating locally installed gus. This might take a while.',
+      message: 'Updating locally installed gcript. This might take a while.',
     });
 
-    const process = shell.exec('npm update gus', { silent: true });
+    const process = shell.exec('npm update gcript', { silent: true });
 
     if (process.code === 0) {
       setOutput({
