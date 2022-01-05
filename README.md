@@ -1,9 +1,10 @@
-![Version](https://img.shields.io/github/package-json/v/ankitmishradev/gcript)
+![npm](https://img.shields.io/npm/v/gcript)
 [![build](https://github.com/ankitmishradev/gcript/actions/workflows/build.yml/badge.svg)](https://github.com/ankitmishradev/gcript/actions/workflows/build.yml)
+[![CodeFactor](https://www.codefactor.io/repository/github/ankitmishradev/gcript/badge)](https://www.codefactor.io/repository/github/ankitmishradev/gcript)
+![npm](https://img.shields.io/npm/dm/gcript)
+![GitHub repo size](https://img.shields.io/github/repo-size/ankitmishradev/gcript?label=size)
 ![Typescript](https://img.shields.io/github/languages/top/ankitmishradev/gcript)
 ![MIT License](https://img.shields.io/github/license/ankitmishradev/gcript)
-[![CodeFactor](https://www.codefactor.io/repository/github/ankitmishradev/gcript/badge)](https://www.codefactor.io/repository/github/ankitmishradev/gcript)
-![GitHub repo size](https://img.shields.io/github/repo-size/ankitmishradev/gcript?label=size)
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/ankitmishradev/gcript)
 
 # Gcript

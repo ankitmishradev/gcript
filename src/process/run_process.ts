@@ -10,13 +10,12 @@ import {
   resolveGitPushWarn,
 } from '../actions';
 import { chain } from '../proxy';
+import message from '../utils/message';
 import { exitProcess } from './exit_process';
 
 export const runProcess = () => {
   if (!which('git')) {
-    console.log(
-      '> Git is not installed on your machine. Please install git to work with gcript.',
-    );
+    console.log(message.common.notFoundGit);
     exitProcess('1');
   } else {
     fs.readdir(`${__dirname}/../../.git`, (err) => {

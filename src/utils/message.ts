@@ -33,6 +33,9 @@ const message = {
         `gcript@${config.global.version}`,
       )}\n`;
     },
+    notFoundGit: `> Git is not installed on your machine. Please install git to work with gcript. Visit \n${chalk.cyan(
+      'https://git-scm.com/downloads',
+    )} to get information regarding git installation.`,
   },
   init: {
     failed: 'Failed executing git init.',
@@ -40,7 +43,7 @@ const message = {
     success: 'Successfully executed git init.',
   },
   add: {
-    nothingToAdd: 'On branch main, all files and changes are already staged.',
+    nothingToAdd: 'On branch main, all changes are already staged.',
     get starting(): string {
       return buildAddMessage('Executing');
     },
