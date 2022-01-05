@@ -18,7 +18,7 @@ export const runProcess = () => {
     console.log(message.common.notFoundGit);
     exitProcess('1');
   } else {
-    fs.readdir(`${__dirname}/../../.git`, (err) => {
+    fs.readdir(`${process.cwd()}/.git`, (err) => {
       if (err) {
         if (err.errno === -4058) {
           gitInit();
