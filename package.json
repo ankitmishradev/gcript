@@ -20,7 +20,12 @@
     "type": "git",
     "url": "git+https://github.com/ankitmishradev/gcript.git"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "git",
+    "utility",
+    "automation"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
