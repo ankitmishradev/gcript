@@ -1,6 +1,6 @@
 {
   "name": "gcript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A nodejs cli tool to automate daily used git processes and provide utilities based on git",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
