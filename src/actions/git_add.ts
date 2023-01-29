@@ -11,9 +11,11 @@ export const gitAdd: GCProcess = () => {
     message: message.add.starting,
   });
 
-  const yetToStageAdd = shell
-    .exec('git status', { silent: true })
-    .stdout.includes('Changes not staged for commit');
+  const status = shell.exec('git status', { silent: true }).stdout;
+
+  const yetToStageAdd =
+    status.includes('Changes not staged for commit') ||
+    status.includes('Untracked files');
 
   if (!yetToStageAdd) {
     chain.add = 'done';
